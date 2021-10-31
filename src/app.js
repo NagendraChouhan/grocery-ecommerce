@@ -672,7 +672,7 @@ app.get("/deshboardproductdata",adminauthanticaton,(req,res)=>{
 
 
 app.listen(port,()=>{
-    console.log('listinig from port ${port}');
+    console.log('listinig from port'+port);
     console.log(__dirname,"../views/partials");
 })
 
