@@ -13,7 +13,7 @@ const firebase=require("./firebase/firebasesdk");
 const cookieParser =require("cookie-parser");
 
 const app=express();
-const port=process.env.port || 3000;
+const port=process.env.port;
 var login=true;
 var logout=false;
 var adminlogin=false;
