@@ -1,0 +1,96 @@
+.login-div-main{
+    text-align: center;
+    margin-right: 0%;
+    margin-left: 0%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+}
+input[type=text] ,[type=password],[type=number],[type=date],[type=tel],[type=email],textarea {
+    width: 400px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 10px;
+}
+input[type=checkbox]{
+    width: 50px;
+    height: 25px;
+    margin: 8px 0;
+}
+textarea{
+    max-width: 400px;
+    min-height: 100px;
+}
+
+label {
+    font-size: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 400px;
+    border-radius: 10px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+.login-img {
+    width: 400px;
+    border-radius: 20px;
+}
+
+.container {
+    padding: 16px;
+}
+.foget-psw{
+    font-size: 12px;
+}
+
+.singup-div-main{
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
+.singup-div{
+    /* border: 2px solid red; */
+    /* background-color: blanchedalmond; */
+    margin: 1%;
+}
+.singup-div form{
+    text-align: center;
+}
+.singup-div table{
+    padding: 2%;
+    margin: auto;
+}
+.singup-inner-div{
+    width: fit-content;
+    margin: auto;
+    padding-top: 1%;
+    padding-right: 1.5%;
+    background-color: rgb(207, 207, 207);
+    border-radius: 10px;
+}
+.singup-img{
+    border-radius: 84px;
+    height: 130px
+}

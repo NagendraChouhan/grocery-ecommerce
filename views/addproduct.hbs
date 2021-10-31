@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="../public/img/logo.jpg"/>
+    {{!-- <link rel="stylesheet" href="../css/Index.css"/> --}}
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/responsive.css">
+    {{!-- <link rel="stylesheet" href="../css/dashboard.css"> --}}
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <header id="header" >
+        {{>header}}        
+    </header>
+    <div class="singup-div-main">
+        <div class="singup-div">
+            <h1><b>Product</b></h1><br/>
+            
+            <form  autocomplete="on" action="/addproduct" name="persanalform" method="post" style="overflow:auto;">
+                <fieldset id="f1">
+                    <div class="singup-inner-div">
+                        <img class="singup-img" src="img/logo.jpg" alt="mandsaur_pharmacy" height="100px" border="1px"><br>
+                        <table align="center" cellpadding="5px" cellspacing="5px">
+                            <tr>
+                                <td id="name"><input type="text" name="name" placeholder="Enter Name" pattern="^[a-z A-Z]+$" title="Only use ALPHABETS" autofocus required ><br>
+                                <span style="color:red" class="pass_class"></span></td></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="price" min="1" placeholder="Enter price" required><br>
+                                <span style="color:red" class="pass_class">Only enter Number of 10 digit</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="image" placeholder="Enter Image Link"  multiple required> <br> 
+                                <span style="color:red" class="pass_class"></span></td>
+                            </tr>
+                            <tr>
+                                <td><textarea name="decription" placeholder="Enter Decription" required cols="10" rows="10"></textarea><br>
+                                <span style="color:red" class="pass_class">Only enter Number of 10 digit</span></td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="checkbox" name="available">In Stock</label><br>
+                            </tr>
+                                <td><button type="submit">submit</td>
+                            </tr>
+                        </table>
+                    </div>	
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

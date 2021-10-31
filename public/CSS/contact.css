@@ -1,0 +1,17 @@
+
+
+.contact-inner-div{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 3%;
+}
+.phone, .email, .office{
+    width: 200px;
+    height: 200px;
+    padding:2%;
+    margin: 1%;
+    border: 2px solid gray;
+}
+
+

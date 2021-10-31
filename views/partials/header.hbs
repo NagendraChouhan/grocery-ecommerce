@@ -1,0 +1,44 @@
+
+        <div class="header-1">
+
+            <a href="#" class="logo"><i class="fas fa-shopping-basket"></i> GrosoMART</a>
+
+            <div>
+                <form action="" class="search-box-container">
+                    <input type="search" id="search-box" placeholder="search here...">
+                    <label for="search-box" class="fas fa-search"></label>
+                    <img src="img/gogle mic.jpeg" alt="">
+                </form>
+            </div>
+        </div>
+
+        <div class="header-2">
+
+            <div id="menu-bar" class="fas fa-bars"></div>
+
+            <nav class="navbar">
+                <a href="/">home</a>
+                <a href="#category">category</a>
+                <a href="/product">product</a>
+                <a href="#deal">deal</a>
+                <a href="/contact">contact</a>
+                {{#if loginValue}}
+                    <a href="/login">Login</a>
+                {{else}}
+                    <a href="/logout">Logout</a>
+                    <a href="/profile">Profile</a>
+                {{/if}}
+                {{#if adminloginValue}}
+                    <a href="/dashboard">Dashboard</a>
+                {{/if}}
+                <div>login  {{loginValue}}</div>
+                <div>adminlogin  {{adminloginValue}}</div>
+            </nav>
+
+            <div class="icons">
+                <a href="/addtocart" class="fas fa-shopping-cart"></a>
+                <a href="#" class="fas fa-heart"></a>
+                <a href="#" class="fas fa-user-circle"></a>
+            </div>
+
+        </div>

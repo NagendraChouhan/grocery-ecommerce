@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="../public/img/logo.jpg"/>
+    {{!-- <link rel="stylesheet" href="css/Index.css"/> --}}
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <header id="header" >
+        {{>header}}        
+    </header>
+    <div class="login-div-main">
+    <h1>Login</h1>
+
+		<form method="post" action="/login">
+			<div class="imgcontainer">
+				<img src="img/logo.jpg" alt="login-img" class="login-img">
+			</div>
+		 
+			<div class="container">
+                <h1>
+                    {{ err }}
+                </h1>
+				<input type="email" placeholder="Enter email" name="email" required><br>
+                <input type="password" placeholder="Password" name="password" required><br>
+				<span style="color:red" class="pass_class"></span><br>
+				
+				<button type="submit" >Log In</button><br>
+                <a href="/singup"><button type="button" class="cancelbtn" >Sing Up</button></a>
+                <span class="foget-psw">Forgot <a href="#">password?</a></span>
+			</div>
+		</form>
+    </div>
+</body>
+</html>

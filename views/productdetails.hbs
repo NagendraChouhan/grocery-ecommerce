@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>complete responsive GrosoMART Website</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- header section starts  -->
+
+    <header>
+        {{>header}}
+    </header>
+
+    <!-- header section ends -->
+
+    <!-- home section starts  -->
+
+
+    <section class="product" id="product">
+
+        <h1 class="heading">latest <span>products</span></h1>
+
+        <div class="box-container">
+            <div class="box">
+                <span class="discount">-33%</span>
+                <div class="icons">
+                    <a href="#" class="fas fa-heart"></a>
+                    <a href="#" class="fas fa-share"></a>
+                    <a href="#" class="fas fa-eye"></a>
+                </div>
+                <img src={{product.fileID}} alt="">
+                <h3>{{product.name}}</h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="price"> Rs.{{product.price}}<span> Rs.{{product.price}}+20 </span> </div>
+                <div class="quantity">
+                    {{!-- <span>quantity : </span> --}}
+                    <button onclick=quantity('{{product.id}}','-') class="inc_dec_button">-</button>
+                    <input  id="no_of_item{{product.id}}" class="comman" value="1" size="1px" readonly >
+                    <button onclick=quantity('{{product.id}}','+') class="inc_dec_button">+</button><br><br>
+                    <span> /kg </span>
+                </div>
+                <a class="btn" id="cart{{product.id}}" onclick="aad_to_cart('{{product.id}}')">add to cart</a>
+            </div>
+            <div class="box">
+                <p>{{product.decription}}</p>
+            </div>
+        </div>
+
+    </section>
+<footer class="footer">
+        {{>footer}}
+    </footer>
+    <!-- footer section ends -->
+    <!-- custom js file link  -->
+     <script>
+                console.log("script");
+                console.log("{{product.id}}");
+                const no_of_itemid=document.getElementById("no_of_item{{product.id}}");
+                console.log("product.id"+'{{product.id}}');
+                console.log("no_of_itemid"+no_of_itemid.value);
+
+                var localstoragevalue=localStorage.getItem("{{product.id}}");
+                console.log("localstoragevalue="+localstoragevalue);
+                if(localstoragevalue!=null){
+                    no_of_itemid.value=localstoragevalue;
+                    cartbtn=document.getElementById("cart{{product.id}}");
+                    cartbtn.innerHTML="Go to Cart";
+                    cartbtn.href = "/addtocart";
+                }
+           </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

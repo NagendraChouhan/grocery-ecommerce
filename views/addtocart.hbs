@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>complete responsive GrosoMART Website</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- header section starts  -->
+
+    <header>
+        {{>header}}
+    </header>
+
+    <!-- header section ends -->
+
+    <!-- home section starts  -->
+
+
+    <section class="product" id="product">
+
+        <h1 class="heading">latest <span>products</span></h1>
+        <div class="box-container" style="    gap: 3.5rem;">
+            <div id="cart-box-container" style="display: grid; flex: 1 1 40rem; gap: 10px;">
+                                
+            </div>
+            <div id="total" style="width: 40%; padding: 15px; border: 2px solid rgb(199, 196, 196); border-radius: 6px; height: fit-content; position :sticky; top:120px;">
+                
+            </div>
+        </div>
+    </section>
+
+<footer class="footer">
+        {{>footer}}
+    </footer>
+    <!-- footer section ends -->
+    <script>
+        console.log("script");
+        var cartBoxContainer;
+        var localstoragevalue;
+        var totalItem=0;
+        var grandTotal=0;
+        var flag=false;
+
+        {{#each productlist}}
+            console.log('{{id}}');
+            localstoragevalue=localStorage.getItem("{{id}}");
+            if(localstoragevalue!=null ){
+                flag=true;
+                console.log("localstoragevalue"+localstoragevalue);
+                totalItem+=parseInt(localstoragevalue);
+                let totalprice=localstoragevalue*{{price}}
+                grandTotal+=totalprice;
+                cartBoxContainer=document.getElementById("cart-box-container");
+                cartBoxContainer.innerHTML+='<div class="box" style="display: flex; justify-content: space-evenly; gap: 10px;" id="cartbox{{id}}"><div><span class="discount">-33%</span><div class="icons"><a href="#" class="fas fa-heart"></a><a href="#" class="fas fa-share"></a><a href="#" class="fas fa-eye"></a></div><img src={{fileID}} alt=""></div><div style="place-self: center;"><h3>{{name}}</h3><div class="price">Rs.{{price}}<span> Rs.{{price}}+20 </span> </div><div class="quantity"><button onclick=quantity("{{id}}","-","{{price}}") class="inc_dec_button">-</button><input  id="no_of_item{{id}}" class="comman" value="'+localstoragevalue+'" size="1px" readonly ><span>kg </span><button onclick=quantity("{{id}}","+","{{price}}") class="inc_dec_button">+</button><br><br></div><button class="removecart" onclick=removecart("{{id}}","{{price}}")>Remove</button></div></div>'
+            }
+            else{
+                console.log(null);
+            }
+        {{/each}}
+        if(flag){
+            total=document.getElementById("total");
+            total.innerHTML='<h1 class="price-box bottom-border-font-large">PRICE DETAILS</h1><div class="price-box"><div>Price</div><div id="totalprice">₹'+(grandTotal+((grandTotal/100)*33)).toFixed(0)+'</div></div><div class="price-box"><div>Total Item</div><div id="totalitem">'+totalItem+'</div></div><div class="price-box"><div>Discount</div><div id="discount" style="color: #0e9748;">-₹'+((grandTotal/100)*33).toFixed(0)+'</div></div><div class="price-box"><div> Delivery Charges </div><div style="color: #27ae60;">FREE</div></div><div class="price-box bottom-border-font-large" style="color: red;"><div>Total Amount</div><div id="grandtotal">'+grandTotal+'</div></div><div class="price-box" id="save-line" style="color: #0e9748; font-size:medium;">You will save ₹'+((grandTotal/100)*33).toFixed(0)+' on this order</div><div class="price-box" style="color: #0e9748; font-size:medium;"><button class="buy-order-btn">BUY ORDER</button></div>'
+        }
+        else{
+            total=document.getElementById("total");
+            total.innerHTML='<h1>Go to product</h1>'
+        }
+
+
+    </script>
+    <!-- custom js file link  -->
+    <script src="js/script.js"></script>
+    </body>
+</html>

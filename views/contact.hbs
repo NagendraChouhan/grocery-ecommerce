@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>complete responsive GrosoMART Website</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+
+</head>
+
+<body>
+    <!-- header section starts  -->
+
+    <header>
+        {{>header}}
+    </header>
+
+    <!-- header section ends -->
+    <!-- contact section starts  -->
+
+    <section class="contact" id="contact">
+
+        <h1 class="heading"> <span>contact</span> us </h1>
+        
+        <div class="contact-inner-div">
+            <div class="phone">
+                <h1>PHONE NUMBER</h1>
+                <p>9587456321</p>
+                <p>888-555-222 <br>(Tol Free)</p>    
+            </div>
+            <div class="email">
+                <h1>EMAIL</h1>
+                <p>abc@1234gmail.com</p>
+            </div>
+            <div class="office">
+                <h1>OUR OFFICE</h1>
+                <p>adress of office</p>
+            </div>
+        </div>
+        <h1 class="heading">enquiry</h1>
+        <form action="">
+
+            <div class="inputBox">
+                <input type="text" placeholder="name">
+                <input type="email" placeholder="email">
+            </div>
+
+            <div class="inputBox">
+                <input type="number" placeholder="number">
+                <input type="text" placeholder="subject">
+            </div>
+
+            <textarea placeholder="message" name="" id="" cols="30" rows="10"></textarea>
+
+            <input type="submit" value="send message" class="btn">
+
+        </form>
+
+    </section>
+
+    <!-- contact section ends -->
+
+    <!-- footer section starts  -->
+
+    <footer class="footer">
+        {{>footer}}
+    </footer>
+    <!-- footer section ends -->
+    
+    <!-- custom js file link  -->
+    <script src="js/script.js"></script>
+    </body>
+    </html>
