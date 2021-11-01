@@ -8,18 +8,18 @@ const productDetail=require("../models/productmodel");
 const authentication=async(req,res,next)=>{
     try {
         const token =req.cookies.token;
-        console.log("auth token");
-        console.log(token);
+        // console.log("auth token");
+        // console.log(token);
         
-            console.log("user varify1");
+        //     console.log("user varify1");
             const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
             const data = await userDetails.findOne({_id:tokenvarify._id});
-            console.log("tokenvarify="+tokenvarify._id);
-            console.log("defined tokenvarify");
+            // console.log("tokenvarify="+tokenvarify._id);
+            // console.log("defined tokenvarify");
             req.userdata=data;
-            console.log("req.userdata"+req.userdata);
+            //console.log("req.userdata"+req.userdata);
             if(req.userdata===null || req.userdata===undefined){
-                console.log("undefined tokenvarify");
+                //console.log("undefined tokenvarify");
 
                 const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
                 const data = await adminDetails.findOne({_id:tokenvarify._id});
@@ -32,17 +32,10 @@ const authentication=async(req,res,next)=>{
             console.log("################ after verify auth user");
         
             req.token=token;
-            // console.log(user);
-            console.log("################");
-            // console.log(data.name);
-            console.log("################");
             next();
     } 
     catch (error) {
-        console.log("################");
-        console.log("authanticaton");
-        console.log("################");
-        console.log("false");
+        
         console.log("err from auth=="+error);
 
 
@@ -57,7 +50,7 @@ const aauthanticaton=async(req,res,next)=>{
             //for find user is login or not use authtoken
             var admintoken =req.cookies.token;
 
-            console.log("auth token");
+            // console.log("auth token");
 
             // const admintoken =req.cookies.admintoken;
             const adminVarify=jwt.verify(admintoken,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
@@ -65,22 +58,12 @@ const aauthanticaton=async(req,res,next)=>{
             const admin = await adminDetails.findOne({_id:adminVarify._id});
             req.admin=admin;
             req.atoken=admintoken;
-            // console.log(admin);
-            console.log("################");
-            console.log(admin.name);
-            console.log("################");    
-            console.log("next from auth of admin");
-
-
             next();
     } catch (error) {
-        console.log("################");
-        console.log("authanticaton");
-        console.log("################");
+        console.log("er from aauthanticaton="+error);
         var login=true;
         var logout=false;
         if(admintoken!=undefined){
-            console.log("@@@@@@@@token");
             login=false;
             logout=true;
         }
@@ -96,26 +79,21 @@ function acommanauth(renderto) {
     return async(req, res, next) =>{
         try {
             const token =req.cookies.token;
-            console.log("contact auth token");
+            // console.log("contact auth token");
                 const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
                 const data = await userDetails.findOne({_id:tokenvarify._id});
-                console.log("defined tokenvarify");
+                // console.log("defined tokenvarify");
                 req.userdata=data;
                 if(req.userdata===null || req.userdata===undefined){
-                    console.log("undefined tokenvarify");
+                    // console.log("undefined tokenvarify");
                     const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
                     const data = await adminDetails.findOne({_id:tokenvarify._id});
                     req.admindata=data;
                 }
-                console.log("################");
                 next();
         } 
         catch (error) {
-            console.log("################");
-            console.log("authanticaton");
-            console.log("################");
-            console.log("false");
-            console.log("err from contact auth=="+error);
+            console.log("err from acommanauth auth=="+error);
     
             if (renderto !==undefined && renderto!==null) {
                 if(renderto==="product"){
@@ -145,7 +123,6 @@ function acommanauth(renderto) {
                             });
                         })
                     }
-                    console.log("id from productdetails="+id);
                     productDetail.findOne({_id:id},function(error,list){
                         console.log("productDetails error="+error);
                         res.render("productdetails",{

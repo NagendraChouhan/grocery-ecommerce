@@ -23,6 +23,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
-console.log(firebase);
 module.exports=firebase;
 // const analytics = getAnalytics(app);

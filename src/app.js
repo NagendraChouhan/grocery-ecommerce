@@ -29,16 +29,10 @@ app.use(express.urlencoded({extended:false}));
 
 // console.log("value 1"+inout);
 app.get("/",userauthentication,(req,res)=>{
-    console.log("@@@@@@@@");
-    console.log("@@@@@@@@");
-    console.log("$$$$$$$$$$");
-
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -53,11 +47,10 @@ app.get("/",userauthentication,(req,res)=>{
 app.get("/contact",commanauth("contact"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
+        
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -69,11 +62,9 @@ app.get("/contact",commanauth("contact"),(req,res)=>{
 app.get("/product",commanauth("product"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -89,11 +80,9 @@ app.get("/productdetails",commanauth("productdetails"),(req,res)=>{
     // localStorage.setItem('myFirstKey', 'myFirstValue')
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -120,11 +109,9 @@ app.get("/productdetails",commanauth("productdetails"),(req,res)=>{
 app.get("/addtocart",commanauth("addtocart"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -161,7 +148,6 @@ app.get("/logout",userauthentication,async(req,res)=>{
     try {    
         if(req.userdata!=undefined){
             //user is define in authentication
-            console.log("user filter");
             req.userdata.tokens= req.userdata.tokens.filter((currentElement)=>{
                 //token is define/modify in authentication
                 return currentElement.token !== req.token; 
@@ -170,7 +156,6 @@ app.get("/logout",userauthentication,async(req,res)=>{
             await req.userdata.save();
         }
         if(req.admindata!=undefined){
-            console.log("admin filter");
             //admin is define in authentication
             req.admindata.tokens= req.admindata.tokens.filter((currentElement)=>{ 
                 // console.log("filter");
@@ -201,11 +186,9 @@ app.get("/logout",userauthentication,async(req,res)=>{
 app.get("/login",commanauth("login"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -230,7 +213,6 @@ app.post("/login",async(req,res)=>{
         console.log("useremail="+useremail);
         if(useremail===null){
             console.log("user email not found");
-            // res.status(400).send("emial are naot match");
             //#################### user log in code pause #################
 
 
@@ -244,13 +226,8 @@ app.post("/login",async(req,res)=>{
                 res.status(400).send("admin email are not match");    
             }
             else{
-                console.log("admin match");
                 const isMatch=await bcryptjs.compare(password,adminemail.password);
-                console.log("admin password M="+isMatch);
-    
-                console.log("admin login token");
                 const token= await adminemail.generateToten();
-                console.log(token);
                 res.cookie("token",token,{
                     expires:new Date(Date.now()+600000),
                     httpOnly:true,
@@ -262,10 +239,8 @@ app.post("/login",async(req,res)=>{
                     // secure:true
                 });
 
-                console.log("cookie token "+req.cookies.admintoken);
-    
+                
                 if(isMatch){
-                    console.log("admin password M="+isMatch);
                     // console.log("value login before"+inout);
                     login=false;
                     logout=true;
@@ -298,25 +273,17 @@ app.post("/login",async(req,res)=>{
             res.status(400).send("you are not alow to exis your acount");
         }
         else{
-            console.log("user match");
             const isMatch=await bcryptjs.compare(password,useremail.password);
-            console.log("user password M="+isMatch);
-
-            console.log("user login token");
             const token= await useremail.generateToten();
-            console.log(token);
-            console.log(token);
-            res.cookie("token",token,{
+           res.cookie("token",token,{
                 expires:new Date(Date.now()+600000),
                 httpOnly:true,
                 // secure:true
                 
             });
 
-            console.log("cookie token "+req.cookies.token);
             
             if(isMatch){
-                console.log("user password M="+isMatch);
                 login=false;
                 logout=true;
                 res.status(201).render("index",{
@@ -343,11 +310,9 @@ app.post("/login",async(req,res)=>{
 app.get("/singup",commanauth("singup"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        console.log("@@@@@@@@token");
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -358,11 +323,10 @@ app.get("/singup",commanauth("singup"),(req,res)=>{
 })
 app.post("/singup",async(req,res)=>{
     try {
-        console.log("singup");
         const username=req.body.username;
         const useremail=await userDetails.findOne({email:username});
         if(useremail===null){
-            console.log("if email");
+            // console.log("if email");
             const password=req.body.pass;
             const repassword=req.body.rPass;
             if(password===repassword){
@@ -370,7 +334,7 @@ app.post("/singup",async(req,res)=>{
                 const phone=req.body.phoneNo;
                 const gender=req.body.gender;
                 const dob=req.body.dob;
-                console.log("if pass");
+                //console.log("if pass");
                 const reguserDetails=new userDetails({
                     name:name,
                     email:username,
@@ -379,11 +343,8 @@ app.post("/singup",async(req,res)=>{
                     gender:gender,
                     dob:dob
                 })
-                console.log("singup token");
                 const token= await reguserDetails.generateToten();
-                console.log(token);
                 const register=await reguserDetails.save();
-                console.log("if regi");
                 res.status(201).render("login",{
                     loginValue:login,
                     adminloginValue:adminlogin,
@@ -418,7 +379,6 @@ app.get("/dashboard",adminauthanticaton,(req,res)=>{
 })
 app.get("/dashboard/singup",adminauthanticaton,(req,res)=>{
     if(req.admin!=undefined && req.admin!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -429,11 +389,10 @@ app.get("/dashboard/singup",adminauthanticaton,(req,res)=>{
 })
 app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
     try {
-        console.log("admin singup");
         const username=req.body.username;
         const adminemail=await adminDetails.findOne({email:username});
         if(adminemail===null){
-            console.log("if email");
+            // console.log("if email");
             const password=req.body.pass;
             const repassword=req.body.rPass;
             if(password===repassword){
@@ -442,7 +401,6 @@ app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
                 const gender=req.body.gender;
                 const dob=req.body.dob;
                 const type=req.body.type;
-                console.log("if pass");
                 if(type==="admin"){
                     const regAdminDetails=new adminDetails({
                         name:name,
@@ -452,11 +410,8 @@ app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
                         gender:gender,
                         dob:dob
                     })
-                    console.log("singup token");
                     const token= await regAdminDetails.generateToten();
-                    console.log(token);
                     const register=await regAdminDetails.save();
-                    console.log("if regi");
                     res.status(201).render("singup",{
                         loginValue:login,
                         logoutValue:logout,
@@ -487,7 +442,6 @@ app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
 })
 app.get("/addproduct",adminauthanticaton,(req,res)=>{
     if(req.admin!=undefined && req.admin!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -509,24 +463,18 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
         var available=req.body.available;
         var blockcheckboxuser=req.body.blockcheckbox;
 
-        console.log("available="+available);
-            if(available==="on"){
-                available=true;
-                console.log("available true="+available);
-            }
-            else{
-                available=false;
-                console.log("available false="+available);
-            }
-            console.log("available after ="+available);
-
+        if(available==="on"){
+            available=true;
+        }
+        else{
+            available=false;
+        }
+        
         if(deletecheckbox==="on"){
-            console.log("deletecheckbox="+deletecheckbox);
             try {
                 const result = await productDetail.deleteOne({
                     _id:id
                 })
-                console.log("result form delete of add product ="+result);
                 productDetail.find({},function(error,list){
                     res.render("dashboarddeletedata",{
                     loginValue:login,
@@ -541,7 +489,6 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
         }
         else if(updatecheckboxproduct=="on"){
             try {
-                console.log("id="+id);
                 const result=await productDetail.updateOne(
                     { _id: id },
                     {
@@ -554,7 +501,6 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
                         }
                     }
                  )
-                 console.log("update result from addproduct="+result);
                  productDetail.find({},function(error,list){
                     res.render("updatedata",{
                         loginValue:login,
@@ -573,7 +519,6 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
         }
         else if(blockcheckboxuser=="on"){
             try {
-                console.log("id="+id);
                 const result=await userDetails.updateOne(
                     { _id: id },
                     {
@@ -582,7 +527,6 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
                         }
                     }
                  )
-                 console.log("update result from addproduct="+result);
                  userDetails.find({},function(error,list){
                     res.render("dashboard",{
                         loginValue:login,
@@ -611,7 +555,6 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
             });
         }
         
-        console.log("product save");
     } catch (error) {
         console.log("products err="+error);
         res.status(400).send("products err="+error);
@@ -620,7 +563,6 @@ app.post("/addproduct",adminauthanticaton,async(req,res)=>{
 })
 app.get("/updatedata",adminauthanticaton,(req,res)=>{
     if(req.admin!=undefined && req.admin!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -634,7 +576,6 @@ app.get("/updatedata",adminauthanticaton,(req,res)=>{
 })
 app.get("/dashboarddeletedata",adminauthanticaton,(req,res)=>{
     if(req.admin!=undefined && req.admin!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
@@ -657,7 +598,6 @@ app.post("/dashboarddeletedata",adminauthanticaton,(req,res)=>{
 })
 app.get("/deshboardproductdata",adminauthanticaton,(req,res)=>{
     if(req.admin!=undefined && req.admin!=null){
-        console.log("@@@@@@@@admintoken");
         adminlogin=true;
         login=false;
     }
