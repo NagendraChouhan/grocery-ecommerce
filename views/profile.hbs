@@ -11,6 +11,8 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/login.css">
 
 </head>
 
@@ -28,12 +30,75 @@
 
     <!-- profile section starts  -->
 
-     <section class="product" id="product">
+     <section class="product" id="product" style="padding: 1% 1% 5% 0%; background-color: #eeeeee24;">
 
-        <h1 class="heading">name=<span>{{name.name}}</span></h1>
-        <h1>name={{name.name}}</h1>
-        
+        <h1 class="heading"><span>{{data.name}}</span></h1>
+        <button class="openbtn menu-position" id="openmenubtn" onclick="openmenu()">☰ Menu</button>  
+        <menu class="dashboard-menu menu-position" id="leftsidemenu" style="width:0px; bottom: 25%;">
+            <button class="openbtn closebtn" style="text-align: right;" onclick="closemenu()">×</button>  
+            <div class="dashboard-option" onclick="profile()">Profile</div>
+            <div class="dashboard-option" onclick="orders()">Orders</div>
+            <div class="dashboard-option" onclick="address()">Address</div>
+            <div class="dashboard-option" id="Logout" onclick="location.href='#'">Logout</div>
+        </menu>
+        <div style="margin: 1% 1% 1% 25%; background-color: white; padding: 2% 0% 5% 8%;">
+            <div id="profile">
+                <h1 style="font-size: x-large; line-height: 2.2;">My Details</h1>
+                <h2>Personal Information</h2><hr>
+                <form method="post" action="/login">                
+                    <div class="container" style="text-align: left; margin-left:15%;">
+                        <label>Name</label><br/>
+                        <input type="text" placeholder="Enter Name" name="name" required {{#if data.name}} value={{data.name}}{{/if}}><br>
+                        <label>Mobile Number</label><br/>
+                        <input type="number" placeholder="Enter Mobile Number" name="phoneNo" required {{#if data.phone}} value={{data.phone}}{{/if}}><br>
+                        <label>DOB</label><br/>
+                        <input type="date" name="dob">
+                        <span style="color:red" class="pass_class"></span><br>
+                        <button type="submit" >Save</button><br>
+                    </div>
+                </form>
+
+                <h2>E-mail Address Information</h2><hr>
+                <form method="post" action="/login">                
+                    <div class="container" style="text-align: left; margin-left:15%;">
+                        <label>Email</label><br/>
+                        <input type="email" readonly {{#if data.email}} value={{data.email}}{{/if}}><br>
+                    </div>
+                </form>
+
+                <h2>Password update</h2><hr>
+                <form method="post" action="/login">                
+                    <div class="container" style="text-align: left; margin-left:15%;">
+                        <label>Current Password</label><br/>
+                        <input type="password" placeholder="Enter Current Password" name="password" required ><br>
+                        <label>New Password</label><br/>
+                        <input type="password" placeholder="Enter Current Password" name="password" required ><br>
+                        <label>Reenter New Password</label><br/>
+                        <input type="password" placeholder="Enter Current Password" name="password" required ><br>
+                        <span style="color:red" class="pass_class"></span><br>
+                        <button type="submit" >Save</button><br>
+                    </div>
+                </form>
+            </div>
+
+            <div id="Orders" style="display: none;">
+                <h1 style="font-size: x-large; line-height: 2.2;">Orders</h1>
+                <h3>Total Item</h3><hr>
+                <div>
+                    <div>
+                        <span>Orders Name</span>
+                        <span>Orders Status</span>  
+                        <span>Orders Img</span>  
+                    </div>
+                </div>
+
+            </div>
+            <div id="Address" style="display: none;">
+                <h1 style="font-size: x-large; line-height: 2.2;">Address</h1>
+            </div>
+        </div>
     </section>
+
 
     <!-- profile section end  -->
 
@@ -45,25 +110,37 @@
     </footer>
     <!-- footer section ends -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- custom js file link  -->
+    <script>
+        function openmenu() {
+        document.getElementById("leftsidemenu").style.width = "225px";
+        document.getElementById("openmenubtn").style.display="none";
+        }
+
+        function closemenu() {
+        document.getElementById("leftsidemenu").style.width = "0";
+        document.getElementById("openmenubtn").style.display="block";
+        }
+
+        function profile(){
+            document.getElementById("Orders").style.display= "none";
+            document.getElementById("Address").style.display = "none";
+            document.getElementById("profile").style.display = "block";
+            window.scrollTo(0, 0);          
+        }
+        function orders(){
+            document.getElementById("profile").style.display= "none";
+            document.getElementById("Address").style.display = "none";
+            document.getElementById("Orders").style.display= "block";
+            window.scrollTo(0, 0);          
+        }
+        function address(){
+            document.getElementById("profile").style.display= "none";
+            document.getElementById("Orders").style.display = "none";
+            document.getElementById("Address").style.display = "block";
+            window.scrollTo(0, 0);          
+        }
+    </script>
     <script type="text/javascript" src="js/script.js"></script>
 
 </body>

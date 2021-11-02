@@ -10,18 +10,40 @@
     box-sizing: border-box;
     color: white;
     padding-top:1%;
-    padding-bottom:1%;
+    padding-bottom:3%;
+}
+.openbtn{
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.closebtn{
+    margin-left: 75%;
+    margin-bottom: 2%;
+    font-size: x-large;
+}
+.openbtn:hover{
+    background-color: #444;
+}
+.closebtn:hover{
+   color:red;
+
 }
 .dashboard-option{
     text-align: left;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     height: 40px;
-    padding-left: 7%;
-    padding-top: 1%;
+    padding-left: 17%;
+    padding-top: 5%;
+    padding-bottom: 16%;
 }
 .dashboard-option:hover{
-    background-color: lightgrey;
+    background-color: #444;
 }
 .dashboard-option:active{
     background-color: lightgrey;
@@ -57,4 +79,15 @@
 }
 .singup-div table{
     width: 100%;
+}
+.menu-position{
+    position: fixed;
+    top: 21%;
+    background-color:#111;
+}
+.menu-position div{
+    color: #818181;
+}
+.menu-position div:hover{
+    color: #f1f1f1;
 }

@@ -16,45 +16,43 @@
     <header id="header" >
         {{>header}}        
     </header>
-    <div class="singup-div-main">
-        <div class="singup-div">
-            <h1><b>Singup</b></h1><br/>
+    <div class="signup-div-main">
+        <div class="signup-div">
+            <h1><b>signup</b></h1><br/>
             
-            <form  autocomplete="on" {{#if adminloginValue}} action="/dashboard/singup" {{/if}} action="/singup" name="persanalform" method="post" style="overflow:auto;">
+            <form  autocomplete="on" {{#if adminloginValue}} action="/dashboard/signup" {{/if}} action="/signup" name="persanalform" method="post" style="overflow:auto;">
                 <fieldset id="f1">
-                    <div class="singup-inner-div">
-                        <img class="singup-img" src="img/logo.jpg" alt="mandsaur_pharmacy" height="100px" border="1px"><br>
+                    <div class="signup-inner-div container">
+                        <img class="signup-img" src="img/logo.jpg" alt="mandsaur_pharmacy" height="100px" border="1px"><br>
                         <table align="center" cellpadding="5px" cellspacing="5px">
                             <tr>
-                                <td id="name"><input type="text" name="name" placeholder="Enter Full Name" pattern="^[a-z A-Z]+$" title="Only use ALPHABETS" autofocus required ><br>
-                                <span style="color:red" class="pass_class"></span></td></td>
-                            </tr>
-                            <tr>
-                                <td><input type="email" name="username" placeholder="Enter Email" required><br>
-                                <span style="color:red" class="pass_class"></span></td>
-                            </tr>
-                            <tr>
-                                <td><input type="password" name="pass" placeholder="Enter password"  required> <br> 
-                                <span style="color:red" class="pass_class"></span></td>
-                                
-                            </tr>
-                            <tr>
-                                <td><input type="password" name="rPass" placeholder="Reenter Password" required><br>
-                                <span style="color:red" id="repass"></span></td>
-                            </tr>
-                            <tr>
-                                <td><input type="tel" name="phoneNo" placeholder="Enter Number" pattern="[0-9]{10}" required><br>
-                                <span style="color:red" class="pass_class">Only enter Number of 10 digit</span></td>
-                            </tr>
-                            <tr>
                                 <td>
-                                    <label><input type="radio" value="Male" name="gender" checked >Male</label>
-                                    <label><input type="radio" value="Female" name="gender">Female</label>
-                                    <label><input type="radio" value="Other" name="gender">Other</label>
+                                    <div class="validation-error" {{#if signuperror}} style="display: inline-block;"{{/if}}>
+                                        {{ signuperror }}
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td><input type="date"  name="dob" min="1900-01-01" required><br>
+                                <td id="name"><input type="text" name="name" placeholder="Enter Name" pattern="^[a-z A-Z]+$" title="Only use ALPHABETS" autofocus {{#if name}} value={{name}}{{/if}} ><br>
+                                <span style="color:red" class="pass_class"></span></td></td>
+                            </tr>
+                            <tr>
+                                <td><input type="email" name="username" placeholder="Enter Email" {{#if username}} value={{username}}{{/if}} ><br>
+                                <span style="color:red" class="pass_class"></span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="password" name="pass" placeholder="Enter password" {{#if password}} value={{password}}{{/if}} > <br> 
+                                <div style="text-align:left; padding-left:10px; font-size:14px;">
+                                    <span class="pass_class">Password must contain:<br/>minimum Length of 8 charecter<br/>minimum 1 Lowercase and Uppercase leter <br/>minimum 1 Numbers <br/>minimum 1 special Symbols(@,#.$,etc)</span></td>
+                                </div>
+                                
+                            </tr>
+                            <tr>
+                                <td><input type="password" name="rPass" placeholder="Reenter Password" {{#if repassword}} value={{repassword}}{{/if}}><br>
+                                <span style="color:red" id="repass"></span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="number" name="phoneNo" placeholder="Enter Number" {{#if phone}} value={{phone}}{{/if}}><br>
                                 <span style="color:red" class="pass_class"></span></td>
                             </tr>
                             {{#if adminloginValue}}

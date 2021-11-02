@@ -19,14 +19,6 @@ const userschema= new mongoose.Schema({
         type:Number,
         require:true
     },
-    gender : {
-        type:String,
-        require:true
-    },
-    dob : {
-        type:Date,
-        require:true
-    },
     date : {
         type:Date,
         default: Date.now
@@ -49,9 +41,11 @@ userschema.methods.generateToten= async function(){
         const token=jwt.sign({_id:this._id.toString()},"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
         this.tokens=this.tokens.concat({token:token});
         await this.save();
+        console.log("generateToten completed");
+
         return token;
     } catch (error) {
-        res.send("err from token is"+error);
+        console.log("err from token is"+error);
     }
 }
 userschema.pre("save",async function(next){

@@ -24,15 +24,14 @@
 			</div>
 		 
 			<div class="container">
-                <h1>
-                    {{ err }}
-                </h1>
-				<input type="email" placeholder="Enter email" name="email" required><br>
+                <input type="text" placeholder="Enter email" name="email" required {{#if username}} value={{username}}{{/if}}><br>
                 <input type="password" placeholder="Password" name="password" required><br>
 				<span style="color:red" class="pass_class"></span><br>
-				
+				<div class="validation-error" {{#if loginerr}} style="display: inline-block;"{{/if}}>
+                    {{ loginerr }}
+                </div><br>
 				<button type="submit" >Log In</button><br>
-                <a href="/singup"><button type="button" class="cancelbtn" >Sing Up</button></a>
+                <a href="/signup"><button type="button" class="signupbtn" >Sign Up</button></a>
                 <span class="foget-psw">Forgot <a href="#">password?</a></span>
 			</div>
 		</form>

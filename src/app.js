@@ -8,6 +8,7 @@ const adminDetails=require("./models/adminmodel.js");
 const productDetail=require("./models/productmodel.js");
 const  {userauthentication,adminauthanticaton,commanauth}=require("./middleware/authentication");
 const path=require("path");
+var validator = require('validator');
 
 const firebase=require("./firebase/firebasesdk"); 
 const cookieParser =require("cookie-parser");
@@ -141,7 +142,7 @@ app.get("/profile",userauthentication,async(req,res)=>{
     res.render("profile",{
         loginValue:false,
         adminloginValue:adminlogin,
-        name:user,
+        data:user,
     });    
 })
 app.get("/logout",userauthentication,async(req,res)=>{
@@ -163,6 +164,7 @@ app.get("/logout",userauthentication,async(req,res)=>{
                 return currentElement.token !== req.atoken; 
             })
             res.clearCookie("token");
+            res.clearCookie("admintoken");
             await req.admindata.save();
         }
         
@@ -199,12 +201,14 @@ app.get("/login",commanauth("login"),(req,res)=>{
 
 app.post("/login",async(req,res)=>{
     try {
-
         //#################### user log in code start #################
 
 
         const email=req.body.email;
         const password=req.body.password;
+         //=> true
+        
+
         console.log("email="+email);
         console.log("password="+password);
 
@@ -214,16 +218,16 @@ app.post("/login",async(req,res)=>{
         if(useremail===null){
             console.log("user email not found");
             //#################### user log in code pause #################
-
-
             //#################### admin log in code start #################
-
-
             const adminemail=await adminDetails.findOne({email:email});
             console.log("adminemail="+adminemail);
             if(adminemail===null){
                 console.log("admin email not found");
-                res.status(400).send("admin email are not match");    
+                res.status(201).render("login",{
+                    loginValue:true,
+                    username:req.body.email,
+                    loginerr:"Invalid Email and Password",
+                });  
             }
             else{
                 const isMatch=await bcryptjs.compare(password,adminemail.password);
@@ -256,9 +260,11 @@ app.post("/login",async(req,res)=>{
                 }
                 else{
                     console.log("err admin passnot match");
-                    // err="password are note match";
-                    // res.render("login");
-                    res.status(400).send("admin pass are not match");
+                    res.status(201).render("login",{
+                        loginValue:true,
+                        username:req.body.email,
+                        loginerr:"Invalid Email and Password",
+                    }); 
                 }
             }
 
@@ -269,8 +275,12 @@ app.post("/login",async(req,res)=>{
         //#################### user log in code resume #################
 
         else if(useremail.block===true){
-            console.log("err you are not alow to exis your acount");
-            res.status(400).send("you are not alow to exis your acount");
+            console.log("Error Sorry, You are not allowed to access your acount");
+            res.status(201).render("login",{
+                loginValue:true,
+                username:req.body.email,
+                loginerr:"Sorry, You are not allowed to access your Acount",
+            });
         }
         else{
             const isMatch=await bcryptjs.compare(password,useremail.password);
@@ -292,9 +302,11 @@ app.post("/login",async(req,res)=>{
             }
             else{
                 console.log("err user pass");
-                // err="password are note match";
-                // res.render("login");
-                res.status(400).send("user pass are not match");
+                res.status(201).render("login",{
+                    loginValue:true,
+                    username:req.body.email,
+                    loginerr:"Invalid Email and Password",
+                });
             }
         }
         
@@ -307,7 +319,7 @@ app.post("/login",async(req,res)=>{
         console.log("err"+error);
     }
 })
-app.get("/singup",commanauth("singup"),(req,res)=>{
+app.get("/signup",commanauth("signup"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
         login=false;
@@ -321,27 +333,38 @@ app.get("/singup",commanauth("singup"),(req,res)=>{
         adminloginValue:adminlogin,
     });
 })
-app.post("/singup",async(req,res)=>{
+app.post("/signup",async(req,res)=>{
     try {
         const username=req.body.username;
+        if(!validator.isEmail(username)){
+            throw new Error('Invalid Email');
+        }
         const useremail=await userDetails.findOne({email:username});
         if(useremail===null){
             // console.log("if email");
             const password=req.body.pass;
             const repassword=req.body.rPass;
+            if(!validator.isStrongPassword(password)){
+                throw new Error('Password Is Not Strong Please Change It ');
+            }
+            
             if(password===repassword){
+                
                 const name=req.body.name;
                 const phone=req.body.phoneNo;
-                const gender=req.body.gender;
-                const dob=req.body.dob;
+                
+                if(!validator.isMobilePhone(phone.toString(),'en-IN')){
+                    throw new Error('Invalid Mobile Number');
+                }
+                if(!validator.isAlpha(name, 'en-AU', 'en-GB', 'en-HK', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'en-ZM', 'es-ES')){
+                    throw new Error('Name only Contain Alphabet');
+                }
                 //console.log("if pass");
                 const reguserDetails=new userDetails({
                     name:name,
                     email:username,
                     password:password,
                     phone:phone,
-                    gender:gender,
-                    dob:dob
                 })
                 const token= await reguserDetails.generateToten();
                 const register=await reguserDetails.save();
@@ -352,20 +375,25 @@ app.post("/singup",async(req,res)=>{
             }
             else{
                 console.log("password else");
-                // var repass=document.getElementById("repass");
-                // repass.textContent="password are naot match";
-                res.status(400).send("password are naot match");
+                throw new Error('Password are Not Match');
             }
         }
         else{
             console.log("email else");
-            // var repass=document.getElementById("repass");
-            // repass.textContent="password are naot match";
-            res.status(400).send("emial is exist");
+            throw new Error('Emial is Exist');
         }
     } catch (error) {
-        console.log("singup err");
-        res.status(400).send(error);
+        console.log("signup err"+error);
+        res.status(201).render("signup",{
+            loginValue:login,
+            adminloginValue:adminlogin,
+            signuperror:error,
+            username:req.body.username,
+            password:req.body.pass,
+            repassword:req.body.rPass,
+            name:req.body.name,
+            phone:req.body.phoneNo,
+        });
     }
 })
 app.get("/dashboard",adminauthanticaton,(req,res)=>{
@@ -377,17 +405,17 @@ app.get("/dashboard",adminauthanticaton,(req,res)=>{
     })
       
 })
-app.get("/dashboard/singup",adminauthanticaton,(req,res)=>{
+app.get("/dashboard/signup",adminauthanticaton,(req,res)=>{
     if(req.admin!=undefined && req.admin!=null){
         adminlogin=true;
         login=false;
     }
-    res.render("singup",{
+    res.render("signup",{
         loginValue:login,
         adminloginValue:adminlogin,
     });
 })
-app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
+app.post("/dashboard/signup",adminauthanticaton,async(req,res)=>{
     try {
         const username=req.body.username;
         const adminemail=await adminDetails.findOne({email:username});
@@ -412,7 +440,7 @@ app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
                     })
                     const token= await regAdminDetails.generateToten();
                     const register=await regAdminDetails.save();
-                    res.status(201).render("singup",{
+                    res.status(201).render("signup",{
                         loginValue:login,
                         logoutValue:logout,
                         adminloginValue:adminlogin,
@@ -436,7 +464,7 @@ app.post("/dashboard/singup",adminauthanticaton,async(req,res)=>{
             res.status(400).send("emial is exist");
         }
     } catch (error) {
-        console.log("singup err");
+        console.log("signup err");
         res.status(400).send(error);
     }
 })
@@ -629,10 +657,10 @@ app.listen(port,()=>{
 
 
 
-    // app.get("/dashboard/singup",(req,res)=>{
-    //     res.render("singup");
+    // app.get("/dashboard/signup",(req,res)=>{
+    //     res.render("signup");
     // })
-    // app.post("/dashboard/singup", async(req,res)=>{
+    // app.post("/dashboard/signup", async(req,res)=>{
     //     try{
     //         const adminPass=req.body.adminPass;
     //         const adminRPass=req.body.adminRPass;
@@ -654,7 +682,7 @@ app.listen(port,()=>{
     //                 dob:Dob,
     //             })
     //             const register=await newadminDetail.save();
-    //             res.status(201).render("singup");
+    //             res.status(201).render("signup");
     //         }
     //         else{
                 

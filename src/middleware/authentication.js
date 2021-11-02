@@ -48,7 +48,7 @@ const authentication=async(req,res,next)=>{
 const aauthanticaton=async(req,res,next)=>{
     try {
             //for find user is login or not use authtoken
-            var admintoken =req.cookies.token;
+            var admintoken =req.cookies.admintoken;
 
             // console.log("auth token");
 
@@ -56,6 +56,7 @@ const aauthanticaton=async(req,res,next)=>{
             const adminVarify=jwt.verify(admintoken,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
             console.log("admin varify");
             const admin = await adminDetails.findOne({_id:adminVarify._id});
+            console.log("admin id varify");
             req.admin=admin;
             req.atoken=admintoken;
             next();
