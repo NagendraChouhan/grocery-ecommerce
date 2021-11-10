@@ -41,14 +41,14 @@
             <div class="dashboard-option" onclick="address()">Address</div>
             <div class="dashboard-option" id="Logout" onclick="location.href='#'">Logout</div>
         </menu>
-        <div style="margin: 1% 1% 1% 25%; background-color: white; padding: 2% 0% 5% 8%;">
+        <div style="margin: 1% 1% 1% 8%; background-color: white; padding: 2% 0% 5% 8%;">
             <div id="profile">
                 <h1 style="font-size: x-large; line-height: 2.2;">My Details</h1>
                 <h2>Personal Information</h2><hr>
                 <form method="post" action="/login">                
                     <div class="container" style="text-align: left; margin-left:15%;">
-                        <label>Name</label><br/>
-                        <input type="text" placeholder="Enter Name" name="name" required {{#if data.name}} value={{data.name}}{{/if}}><br>
+                        <label>Name {{data.name}}</label><br/>
+                        <input type="text" placeholder="Enter Name" name="name" required {{#if data.name}} value="{{data.name}}"{{/if}}><br>
                         <label>Mobile Number</label><br/>
                         <input type="number" placeholder="Enter Mobile Number" name="phoneNo" required {{#if data.phone}} value={{data.phone}}{{/if}}><br>
                         <label>DOB</label><br/>
@@ -94,7 +94,7 @@
 
             </div>
             <div id="Address" style="display: none;">
-                <h1 style="font-size: x-large; line-height: 2.2;">Address</h1>
+                {{>addresspartial}}
             </div>
         </div>
     </section>
@@ -112,6 +112,13 @@
 
     <!-- custom js file link  -->
     <script>
+        var selectaddbtn=document.getElementsByClassName("selectaddbtn");
+        for(let i=0;i<selectaddbtn.length;i++){
+            console.log(selectaddbtn[i]);
+            selectaddbtn[i].style.display = "none"
+        }
+
+        selectaddbtn
         function openmenu() {
         document.getElementById("leftsidemenu").style.width = "225px";
         document.getElementById("openmenubtn").style.display="none";
@@ -127,18 +134,23 @@
             document.getElementById("Address").style.display = "none";
             document.getElementById("profile").style.display = "block";
             window.scrollTo(0, 0);          
+            closemenu();
         }
         function orders(){
             document.getElementById("profile").style.display= "none";
             document.getElementById("Address").style.display = "none";
             document.getElementById("Orders").style.display= "block";
             window.scrollTo(0, 0);          
+            closemenu();
+
         }
         function address(){
             document.getElementById("profile").style.display= "none";
             document.getElementById("Orders").style.display = "none";
             document.getElementById("Address").style.display = "block";
-            window.scrollTo(0, 0);          
+            window.scrollTo(0, 0);        
+            closemenu();
+
         }
     </script>
     <script type="text/javascript" src="js/script.js"></script>
@@ -146,3 +158,6 @@
 </body>
 
 </html>
+
+
+

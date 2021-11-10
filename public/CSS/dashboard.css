@@ -82,8 +82,9 @@
 }
 .menu-position{
     position: fixed;
-    top: 21%;
+    top: 35%;
     background-color:#111;
+    height: max-content;
 }
 .menu-position div{
     color: #818181;

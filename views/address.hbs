@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>complete responsive GrosoMART Website</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+
+    <!-- header section starts  -->
+
+    <header>
+        {{>header}}
+        
+
+    </header>
+
+    <!-- header section ends -->
+
+    <!-- profile section starts  -->
+
+    <section class="product" id="product" style="padding: 1% 1% 5% 0%; background-color: #eeeeee24;">
+
+        <h1 class="heading"><span>{{data.name}}</span></h1>
+        
+        <div style="margin: 1% 1% 1% 8%; background-color: white; padding: 2% 0% 5% 8%;">
+           {{>addresspartial}}
+        </div>
+    </section>
+
+
+    <!-- profile section end  -->
+
+
+    <!-- footer section starts  -->
+
+    <footer class="footer">
+        {{>footer}}
+    </footer>
+    <!-- footer section ends -->
+
+    <!-- custom js file link  -->
+    <script>
+        //window.location.href = "/address";
+        function addaddress(id){
+            console.log("click");
+            console.log("id="+id);
+            document.getElementById('AddressTable').scrollIntoView();
+            
+            var aformid=document.getElementById("formid");
+            aformid.setAttribute("action","/pay");
+            document.getElementById("addsubbtn").innerHTML="Pay";
+
+            var country=document.getElementsByName("country")[0];
+            var state=document.getElementsByName("state")[0];
+            var district=document.getElementsByName("district")[0];
+            var tehsil=document.getElementsByName("tehsil")[0];
+            var houseNo=document.getElementsByName("houseNo")[0];
+            var colony=document.getElementsByName("colony")[0];
+            var landmark=document.getElementsByName("landmark")[0];
+            var pinCode=document.getElementsByName("pinCode")[0];
+
+            var countryId=document.getElementById(id+"country");
+            var stateId=document.getElementById(id+"state");
+            var districtId=document.getElementById(id+"district");
+            var tehsilId=document.getElementById(id+"tehsil");
+            var houseNoId=document.getElementById(id+"houseNo");
+            var colonyId=document.getElementById(id+"colony");
+            var landmarkId=document.getElementById(id+"landmark");
+            var pinCodeId=document.getElementById(id+"pinCode");
+
+            country.value=countryId.innerHTML;
+            state.value=stateId.innerHTML;
+            district.value=districtId.innerHTML;
+            tehsil.value=tehsilId.innerHTML;
+            houseNo.value=houseNoId.innerHTML;
+            colony.value=colonyId.innerHTML;
+            landmark.value=landmarkId.innerHTML;
+            pinCode.value=pinCodeId.innerHTML;
+
+        }
+    </script>
+    <script type="text/javascript" src="js/script.js"></script>
+
+</body>
+
+</html>

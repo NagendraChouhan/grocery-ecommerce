@@ -17,12 +17,21 @@ const userschema= new mongoose.Schema({
     },    
     phone : {
         type:Number,
-        require:true
     },
     date : {
         type:Date,
         default: Date.now
     },
+    address:[{
+        country:String,
+        state:String,
+        district:String,
+        tehsil:String,
+        houseNo:String,
+        colony:String,
+        landmark:String,
+        pinCode:Number,
+    }],
     block:{
         type:Boolean
     },
@@ -48,16 +57,16 @@ userschema.methods.generateToten= async function(){
         console.log("err from token is"+error);
     }
 }
-userschema.pre("save",async function(next){
-    try {
-        if(this.isModified("password")){
-            this.password= await bcryptjs.hash(this.password,10);
-        }
-        next();
-    } catch (error) {
-        res.send("err in middware is="+error);
-    }
-})
+// userschema.pre("save",async function(next){
+//     try {
+//         if(this.isModified("password")){
+//             this.password= await bcryptjs.hash(this.password,10);
+//         }
+//         next();
+//     } catch (error) {
+//         res.send("err in middware is="+error);
+//     }
+// })
 
 const userDetails=new mongoose.model("userDetail",userschema);
 module.exports=userDetails;

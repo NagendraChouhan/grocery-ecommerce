@@ -2,7 +2,7 @@
     text-align: center;
     margin-right: 0%;
     margin-left: 0%;
-    margin-top: 2%;
+    margin-top: 5%;
     margin-bottom: 1%;
 }
 .container input[type=text] ,[type=password],[type=number],[type=date],[type=tel],[type=email],textarea {
@@ -29,7 +29,7 @@ textarea{
     font-size: 15px;
 }
 
-.container button {
+.container button, .address-div button{
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -40,7 +40,7 @@ textarea{
     border-radius: 10px;
 }
 
-.container button:hover {
+.container button:hover,.address-div button:hover{
     opacity: 0.8;
 }
 .container .signupbtn {
@@ -50,7 +50,7 @@ textarea{
   }
 .imgcontainer {
     text-align: center;
-    margin: 24px 0 12px 0;
+    margin: 24px 20px 12px 12px;
 }
 
 .login-img {
@@ -88,18 +88,48 @@ textarea{
     text-align: center;
 }
 .signup-div table{
-    padding: 2%;
     margin: auto;
 }
 .signup-inner-div{
     width: fit-content;
     margin: auto;
     padding-top: 1%;
-    padding-right: 1.5%;
     background-color: rgb(207, 207, 207);
     border-radius: 10px;
 }
 .signup-img{
     border-radius: 84px;
     height: 130px
+}
+.address-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.address-container .address-div{
+    margin: 2%;
+    border: 1px solid;
+    font-size: larger;
+    padding: 1%;
+    flex:1 1 30rem;
+    max-width: 290px;
+
+} 
+.address-container .address-div p{
+    padding: 5px;
+}
+
+
+@media screen and (max-width:500px){
+    .container input[type=text] ,[type=password],[type=number],[type=date],[type=tel],[type=email],[type=checkbox],textarea,.login-img,.container button,.signup-inner-div,.signup-div table{
+        width: 100%;
+        border-radius: 3px;
+    }
+    .signup-div, .signup-div table{
+        margin: 0px;
+    }
+    
+    .signup-inner-div{
+        background-color: rgb(255, 255, 255);
+       
+    }
 }

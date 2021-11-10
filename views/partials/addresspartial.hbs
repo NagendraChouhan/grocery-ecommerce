@@ -1,0 +1,87 @@
+ <div id="Address">
+                <h1 style="font-size: x-large; line-height: 2.2;">Address</h1>
+                <div>
+                    <div class="address-container">
+                        {{#each data.address}}
+                            <div class="address-div">
+                                <p id="{{id}}houseNo">{{houseNo}}</p>
+                                <p><span id="{{id}}colony">{{colony}}</span>>,<span id="{{id}}district">{{district}}</span></p>
+                                <p><span id="{{id}}tehsil">{{tehsil}}</span>>,<span id="{{id}}state">{{state}}</span></p>
+                                <p id="{{id}}pinCode">{{pinCode}}</p>
+                                <p id="{{id}}country">{{country}}</p>
+                                <p id="{{id}}landmark">{{landmark}}</p>
+                                <button style="width: 100%; padding: 8px 20px; border-radius: 2px;" class="selectaddbtn" onclick="addaddress('{{id}}')">Select Address</button><br>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                
+                <form method="post"  id="formid" action="/address?id=+{{data.id}}"> 
+                    <div class="container" style="text-align: left; margin-left:15%;">
+                        <table align="center" id="AddressTable" cellpadding="5px" cellspacing="5px">
+                            <tr>
+                                <td>
+                                    Country<br/>
+                                    <input type="text" name="country" placeholder="Enter Country" autofocus required value="India" readonly><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    State<br/>
+                                    <input type="text" name="state" placeholder="Enter State" value="MP" required readonly> <br> 
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    District<br/>
+                                    <input type="text" name="district" placeholder="Enter District" value="Ujjain" required readonly><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tehsil<br/>
+                                    <input type="text" name="tehsil" placeholder="Enter Tehsil" required><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    House No.<br/>
+                                    <input type="text" name="houseNo" placeholder="Enter House Number"  required><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Colony Name<br/>
+                                    <input type="text" name="colony" placeholder="Enter Colony Name" required><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td>
+                                    Landmark<br/>
+                                    <input type="text" name="landmark" placeholder="Ex.- Near to Scholl,Collage,garden, et.c" required><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Pin Code<br/>
+                                    <input type="number" name="pinCode" placeholder="Enter Pin Code" title="Only use Number" required><br>
+                                    <span style="color:red" class="pass_class"></span>
+                                </td>
+                            </tr>
+                             
+                            <tr>
+                                <td><button id="addsubbtn" type="submit">Add Address</td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>

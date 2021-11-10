@@ -51,11 +51,12 @@
                                 <td><input type="password" name="rPass" placeholder="Reenter Password" {{#if repassword}} value={{repassword}}{{/if}}><br>
                                 <span style="color:red" id="repass"></span></td>
                             </tr>
-                            <tr>
-                                <td><input type="number" name="phoneNo" placeholder="Enter Number" {{#if phone}} value={{phone}}{{/if}}><br>
-                                <span style="color:red" class="pass_class"></span></td>
-                            </tr>
+                            
                             {{#if adminloginValue}}
+                                <tr>
+                                    <td><input type="number" name="phoneNo" placeholder="Enter Number" {{#if phone}} value={{phone}}{{/if}}><br>
+                                    <span style="color:red" class="pass_class"></span></td>
+                                </tr>
                                 <tr>
                                     <td>
                                     <label><input type="radio" value="admin" name="type" checked>Admin</label>
