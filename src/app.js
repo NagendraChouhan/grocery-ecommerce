@@ -15,6 +15,8 @@ require('dotenv').config()
 
 const firebase=require("./firebase/firebasesdk"); 
 const cookieParser =require("cookie-parser");
+const { async } = require("@firebase/util");
+const { errorMonitor } = require("stream");
 
 const app=express();
 const port=process.env.PORT || 3000;
@@ -32,6 +34,46 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended:false}));
 
 // console.log("value 1"+inout);
+
+
+
+function otpsendfunction(uto,uname,uotp){
+    sgMail.setApiKey(process.env.SENDEMAIL_API_KEY);
+    const msg = {
+    to: uto, // EMAIL SEND TO
+    from: 'nikku200109@gmail.com', // EMAIL SEND BY
+    subject: 'Baren otp',
+    text: 'Hello'+uname+' Your otp is-'+uotp,
+    html: 'Hello<strong>,'+uname+'</strong> Your otp is-'+uotp,
+    }
+    sgMail
+    .send(msg)
+    .then(() => {
+        console.log('Email sent')
+    })
+    .catch((error) => {
+        console.error("err from send email=="+error)
+        
+        res.status(400).send("Error =="+error);
+    })
+}
+
+function generateotp(){
+    let num='1234567890';
+    var otpsend='';
+    for(let i=0;i<4;i++){
+        let value=parseInt(num[Math.floor(Math.random()*10)]);
+        if(value==0 && otpsend==''){
+            value=1;
+            console.log("value000==="+value);
+        }
+        console.log("value==="+value);
+        otpsend+=value;
+        console.log("otpsend==="+otpsend);
+    }
+    return otpsend;
+}
+
 app.get("/",userauthentication,(req,res)=>{
     if(req.userdata!=undefined && req.userdata!=null){
         login=false;
@@ -424,6 +466,7 @@ app.post("/signup",async(req,res)=>{
         if(!validator.isEmail(username)){
             throw new Error('Invalid Email');
         }
+        
         console.log("useremail=="+username);
         var userDetailsemail=await userDetails.findOne({email:username});
         if(userDetailsemail!=null){
@@ -461,22 +504,8 @@ app.post("/signup",async(req,res)=>{
                 //     throw new Error('Name only Contain Alphabet');
                 // }
                 //console.log("if pass");
-                let num='1234567890';
-                var otpsend='';
-                for(let i=0;i<4;i++){
-                    let value=parseInt(num[Math.floor(Math.random()*10)]);
-                    if(value==0 && otpsend==''){
-                        value=1;
-                        console.log("value000==="+value);
-                    }
-                    console.log("value==="+value);
+                var otpsend=await generateotp();
 
-
-                    otpsend+=value;
-                    console.log("otpsend==="+otpsend);
-                }
-
-                // otpsend=parseInt(otpsend)+1000;
                 console.log("otpsend==="+otpsend);
                 const regverifyuser=new verifyuser({
                     name:name,
@@ -486,25 +515,8 @@ app.post("/signup",async(req,res)=>{
                 })
                 
                 const register=await regverifyuser.save();
-                console.log("process.env.SENDEMAIL_API_KEY="+process.env.SENDEMAIL_API_KEY);
-                sgMail.setApiKey(process.env.SENDEMAIL_API_KEY);
-                const msg = {
-                to: username, // EMAIL SEND TO
-                from: 'nikku200109@gmail.com', // EMAIL SEND BY
-                subject: 'Baren otp',
-                text: 'Hello'+name+' Your otp is-'+otpsend,
-                html: 'Hello<strong>,'+name+'</strong> Your otp is-'+otpsend,
-                }
-                sgMail
-                .send(msg)
-                .then(() => {
-                    console.log('Email sent')
-                })
-                .catch((error) => {
-                    console.error("err from send email=="+error)
-                    
-                    res.status(400).send("Error =="+error);
-                })
+                
+                otpsendfunction(username,name,otpsend);
 
                 res.status(201).render("otp",{
                     loginValue:login,
@@ -537,8 +549,146 @@ app.post("/signup",async(req,res)=>{
         });
     }
 })
+app.post("/forgotPassword",async(req,res)=>{
+    try {
+        const username=req.body.email;
+        var userDetailsemail=await userDetails.findOne({email:username});
+        if(userDetailsemail==null){
+            throw new Error ("Invalid Email");
+        }
+        else{
+            console.log("fg inside else");
+            var useremail=await verifyuser.findOne({email:username});
+            //delete data which is exist with same email 
+            if(useremail!=null){
+                console.log("useremail=="+useremail.email);
+                console.log("inside delete of user verify");
+                
+                const result = await verifyuser.deleteOne({
+                    email:useremail.email
+                })
+                console.log("result from user verify=="+result);
+            }
+            useremail=await verifyuser.findOne({email:username});
+
+            otpsend=await generateotp();
+            console.log("fg after generate otp fun"+otpsend);
+            const regverifyuser=new verifyuser({
+                email:username,
+                otp:otpsend
+            })
+            const register=await regverifyuser.save();
+            
+            otpsendfunction(username,otpsend);
+            console.log("fg after otp send fun");
+            res.render("otp",{
+                loginValue:login,
+                adminloginValue:adminlogin,
+                username:req.body.email,
+                otpVisible:false,
+                updatePassotp:true,
+                nameotp:"Email Verification otp",
+                // updatePass:true,
+            });
+        } 
+    } catch (error) {
+        console.log("err from fg ==="+error);
+        res.render("otp",{
+            loginValue:login,
+            adminloginValue:adminlogin,
+            otperr:error,
+            username:req.body.email,
+            otpVisible:true,
+            nameotp:"Email Verification",
+    });
+    }
+})
+app.post("/chechupdatepassotp",async(req,res)=>{
+    try {
+        const username=req.body.email;
+        const otp=req.body.otp;
+        const useremail=await verifyuser.findOne({email:username});
+
+        if(useremail.otp==otp){
+            res.status(201).render("otp",{
+                loginValue:login,
+                adminloginValue:adminlogin,
+                email:req.body.email,
+                nameotp:"Email Verification",
+                updatePass:true,
+            });
+            
+        }
+        else{
+            throw Error;
+        }
+    } catch (error) {
+        res.render("otp",{
+            loginValue:login,
+            adminloginValue:adminlogin,
+            username:req.body.email,
+            nameotp:"Email Verification",
+            updatePassotp:true,
+            updatePass:false,
+            otperr:"Invalid OTP",
+        });
+    }
+
+})
+app.post("/updatepassword",async(req,res)=>{
+    try {
+        const username=req.body.email;
+        const pass=req.body.pass;
+        const rpass=req.body.rPass;
+        const useremail=await verifyuser.findOne({email:username});
+
+        console.log("username=="+username);
+        console.log("pass=="+pass);
+        console.log("rpass=="+rpass);
+        if(pass===rpass){
+
+            console.log("pass from update=="+pass);
+            let password= await bcryptjs.hash(pass,10);
+            console.log("pass from update=="+password);
+            await userDetails.updateOne(
+                {email:username},
+                {
+                    $set:{
+                        password:password,
+                    }
+                }
+            )
+            console.log("after pass udade from updatepass");
+            res.status(201).render("login",{
+                loginValue:login,
+                adminloginValue:adminlogin,
+            });
+        }else{
+            throw new Error ("password are not macth");
+        }
+    } catch (error) {
+        res.render("otp",{
+            loginValue:login,
+            adminloginValue:adminlogin,
+            email:req.body.email,
+            nameotp:"Email Verification",
+            updatePass:true,
+            changepasserr:error,
+        });
+    }
+
+})
 app.get("/otp",(req,res)=>{
     login=true;
+    var forgotPassword;
+    var nameotpValue="OTP";
+    console.log("req.query.forgotPassword=="+req.query.forgotPassword)
+    if(req.query.forgotPassword=="fg"){
+        forgotPassword=true
+        nameotpValue="Email Verification"    
+    }
+    console.log("forgotPassword=="+forgotPassword);
+    
     if(req.userdata!=undefined && req.userdata!=null){
         login=false;
     }
@@ -549,6 +699,8 @@ app.get("/otp",(req,res)=>{
     res.render("otp",{
         loginValue:login,
         adminloginValue:adminlogin,
+        otpVisible:forgotPassword,
+        nameotp:nameotpValue,
     });
 })
 app.post("/otp",async(req,res)=>{

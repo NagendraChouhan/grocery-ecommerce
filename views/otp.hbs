@@ -16,21 +16,43 @@
         {{>header}}        
     </header>
     <div class="login-div-main">
-    <h1>OTP</h1>
-
-		<form method="post" action="/otp">		 
+    <h1>{{nameotp}}</h1>
+        {{#if updatePass}}
+        <form method="post"  action="/updatepassword">		 
 			<div class="container">
-                <input type="text" placeholder="Enter email" name="email" required {{#if username}} value="{{username}}"{{/if}} readonly><br>
+                <input type="email" name="email" placeholder="Enter Email" {{#if email}} value={{email}}{{/if}}> <br> 
+                <input type="password" name="pass" placeholder="Enter password" {{#if password}} value={{password}}{{/if}}> <br> 
+                <div style="text-align:center; padding-left:10px; font-size:14px;">
+                    <span class="pass_class">Password must contain:<br/>minimum Length of 8 charecter<br/>minimum 1 Lowercase and Uppercase leter <br/>minimum 1 Numbers <br/>minimum 1 special Symbols(@,#.$,etc)</span></br>
+                </div>
+                <input type="password" name="rPass" placeholder="Reenter Password" {{#if repassword}} value={{repassword}}{{/if}}><br>
+                <span style="color:red" id="repass"></span>
+                <div class="validation-error" {{#if changepasserr}} style="display: inline-block;"{{/if}}>
+                    {{ changepasserr }}
+                </div><br>
+				<button type="submit">Change</button><br>
+			</div>
+		</form>
+            
+        {{else}}
+
+
+		<form method="post" {{#if updatePassotp}} action="/chechupdatepassotp" {{/if}} {{#if otpVisible}}action="/forgotPassword" {{else}} action="/otp" {{/if}}  >		 
+			<div class="container">
+                <input type="text" placeholder="Enter email" name="email" required {{#if username}} value="{{username}}"{{/if}} {{#if otpVisible}} {{else}} readonly {{/if}}  ><br>
 				<span style="color:red" class="pass_class"></span><br>
-				<input type="number" placeholder="Enter OTP" name="otp" required><br>
+                {{#if otpVisible}} {{else}}<input type="number" placeholder="Enter OTP"  name="otp" required><br>{{/if}}
+				
 
                 <div class="validation-error" {{#if otperr}} style="display: inline-block;"{{/if}}>
                     {{ otperr }}
                 </div><br>
 				<button type="submit">Verify</button><br>
-                <span class="foget-psw">Change <a href="#">Email</a></span>
 			</div>
 		</form>
+        {{/if}}
     </div>
+    <!-- custom js file link  -->
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

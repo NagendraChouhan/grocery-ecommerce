@@ -58,25 +58,15 @@
                     </div>
                 </form>
 
-                <h2>E-mail Address Information</h2><hr>
-                <form method="post" action="/login">                
+                <h2>E-mail Address Information</h2><hr>     
+                <form method="post" action="/forgotPassword">                
                     <div class="container" style="text-align: left; margin-left:15%;">
                         <label>Email</label><br/>
-                        <input type="email" readonly {{#if data.email}} value={{data.email}}{{/if}}><br>
+                        <input type="email" name="email" readonly {{#if data.email}} value={{data.email}}{{/if}}><br>
                     </div>
-                </form>
-
-                <h2>Password update</h2><hr>
-                <form method="post" action="/login">                
+                    <h2>Password update</h2><hr>
                     <div class="container" style="text-align: left; margin-left:15%;">
-                        <label>Current Password</label><br/>
-                        <input type="password" placeholder="Enter Current Password" name="password" required ><br>
-                        <label>New Password</label><br/>
-                        <input type="password" placeholder="Enter Current Password" name="password" required ><br>
-                        <label>Reenter New Password</label><br/>
-                        <input type="password" placeholder="Enter Current Password" name="password" required ><br>
-                        <span style="color:red" class="pass_class"></span><br>
-                        <button type="submit" >Save</button><br>
+                        <button type="submit" >Change Password</button><br>
                     </div>
                 </form>
             </div>

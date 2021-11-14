@@ -4,7 +4,6 @@ const bcryptjs=require("bcryptjs");
 const verifyuserSchema= new mongoose.Schema({
     name: {
         type:String,
-        require:true
     },
     email : {
         type:String,
@@ -12,7 +11,6 @@ const verifyuserSchema= new mongoose.Schema({
     },
     password : {
         type:String,
-        require:true
     },
     otp :{
         type:Number,
