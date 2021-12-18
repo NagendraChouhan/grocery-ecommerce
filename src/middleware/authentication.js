@@ -47,6 +47,8 @@ const authentication=async(req,res,next)=>{
 }
 const aauthanticaton=async(req,res,next)=>{
     try {
+            console.log("call from aauthanticaton try");
+
             //for find user is login or not use authtoken
             var admintoken =req.cookies.admintoken;
 
@@ -62,6 +64,7 @@ const aauthanticaton=async(req,res,next)=>{
             next();
     } catch (error) {
         console.log("er from aauthanticaton="+error);
+        console.log("call from aauthanticaton");
         var login=true;
         var logout=false;
         if(admintoken!=undefined){

@@ -7,24 +7,16 @@
     <title>Document</title>
     <link rel="icon" href="../public/img/logo.jpg"/>
     {{!-- <link rel="stylesheet" href="css/Index.css"/> --}}
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     {{!-- <link rel="stylesheet" href="css/login.css"> --}}
 </head>
 <body>
     <header id="header" >
         {{>header}}        
     </header>
-    <menu class="dashboard-menu">
-        <div class="dashboard-option" onclick="location.href='/dashboard'">User Data</div>
-        <div class="dashboard-option" onclick="location.href='/deshboardproductdata'">Product Data</div>
-        <div class="dashboard-option" onclick="location.href='/updatedata'">Update Data</div>
-        <div class="dashboard-option" onclick="location.href='/dashboarddeletedata'">Delete Data</div>
-        <div class="dashboard-option" onclick="location.href='/addproduct'">Add Data</div>
-        <div class="dashboard-option" onclick="location.href='/dashboard/singup'">Singup</div>
-        <div class="dashboard-option">Logout</div>
-    </menu>
+    {{>dashboardmenu}}
     <div class="dashboard-div-main App-div-main">
         <h2>Dashboard</h2>
         <div >
@@ -45,7 +37,7 @@
                 <tbody>
                     {{#each userList}}
                         <tr>
-                            <form  autocomplete="on" action="/addproduct" name="persanalform" method="post" style="overflow:auto ;">
+                            <form  autocomplete="on" action="/dashboard/addproduct" name="persanalform" method="post" style="overflow:auto ;">
                                 <td class="sn"></td>
                                 <td><input type="text" name="id" readonly value={{id}}></td>
                                 <td>{{name}}</td>
@@ -63,6 +55,6 @@
             </table>
         </div>
     </div>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="../js/script.js"></script>
 </body>
 </html>

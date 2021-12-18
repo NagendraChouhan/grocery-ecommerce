@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
     <header id="header" >
@@ -18,7 +20,7 @@
     <div class="login-div-main">
     <h1>{{nameotp}}</h1>
         {{#if updatePass}}
-        <form method="post"  action="/updatepassword">		 
+        <form id="updatepasswordform">		 
 			<div class="container">
                 <input type="email" name="email" placeholder="Enter Email" {{#if email}} value={{email}}{{/if}}> <br> 
                 <input type="password" name="pass" placeholder="Enter password" {{#if password}} value={{password}}{{/if}}> <br> 
@@ -52,7 +54,58 @@
 		</form>
         {{/if}}
     </div>
+
+    
+    <footer class="footer">
+        {{>footer}}
+    </footer>
     <!-- custom js file link  -->
+    <script>
+        var url = "https://reqbin.com/echo/patch/json";
+        console.log("inside script of ajax");
+        var xhr = new XMLHttpRequest();
+        xhr.open("PATCH", url);
+
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+        }};
+
+        var data = `{
+        "Id": 12345,
+        "Customer": "John Smith",
+        "Quantity": 1,
+        "Price": 10.00
+        }`;
+
+        xhr.send(data);
+
+        
+        $(document).ready(function(){
+            console.log("inside ajax");
+            $('#updatepasswordform').on('submit',function(event){
+                event.preventDefault();
+                const formdata=$(this).serialize();
+                console.log("formdata=="+formdata);
+
+                $.ajax({
+                    url: '/updatepassword',
+                    method: 'patch',
+                    data: formdata,
+                    success: function (result, status, xhr){
+                        console.log('successful.....');
+                    },
+                    error: function(xhr, status, error){
+                        console.log('error from updatepasswordform==='+error);
+                    }
+                })
+            })
+        })
+    </script>
     <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
