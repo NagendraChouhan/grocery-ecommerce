@@ -1,0 +1,8 @@
+#total{
+    width: 40%; 
+    padding: 15px;
+    border: 2px solid rgb(199, 196, 196); 
+    border-radius: 6px; height: fit-content; 
+    position :sticky; 
+    top:120px;
+}

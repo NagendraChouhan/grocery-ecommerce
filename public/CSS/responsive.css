@@ -45,6 +45,12 @@
         width: 46%;
     }
 }
+@media screen and (max-width:820px) {
+    #total{
+        width: 100%;
+    }
+    
+}
 @media screen and (max-width:600px){
     .grid-container {
         grid-template-areas:
