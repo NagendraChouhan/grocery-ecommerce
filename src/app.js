@@ -12,6 +12,7 @@ const { errorMonitor } = require("stream");
 //importing routes code start here
 
 const dashboard=require("./routes/dashboard.js");
+const empdashboard=require("./routes/empdashboard.js");
 const login=require("./routes/login.js");
 const signup=require("./routes/signup.js");
 const home=require("./routes/home.js");
@@ -25,11 +26,14 @@ const profile=require("./routes/profile.js");
 const app=express();
 const port=process.env.PORT || 3000;
 
-const staticpath=path.join(__dirname,"../public");
+// const staticpath=path.join(__dirname,"../public");
+// app.use(express.static(staticpath));
 const partialspath=path.join(__dirname,"../views/partials");
 
 app.set('view engine','hbs');
-app.use(express.static(staticpath));
+app.use('/css',express.static(path.join(__dirname,"../public/css")));
+app.use('/img',express.static(path.join(__dirname,"../public/img")));
+app.use('/js',express.static(path.join(__dirname,"../public/js")));
 hbs.registerPartials(partialspath);
 app.use(cookieParser());
 
@@ -43,6 +47,7 @@ app.use('/login',login);
 app.use('/signup',signup);
 app.use('/address',address);
 app.use('/profile',profile);
+app.use('/employe',empdashboard);
 app.use('/',home);
 
 //call router code end here

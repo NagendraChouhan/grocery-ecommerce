@@ -20,7 +20,7 @@
         <div class="signup-div">
             <h1><b>signup</b></h1><br/>
             
-            <form  autocomplete="on" {{#if adminloginValue}} action="/dashboard/signup" {{/if}} action="/signup" name="persanalform" method="post" style="overflow:auto;">
+            <form  autocomplete="on" {{#if adminloginValue}} action="/dashboard/signup" {{else}} action="/signup" {{/if}} name="persanalform" method="post" style="overflow:auto;">
                 <fieldset id="f1">
                     <div class="signup-inner-div container">
                         <img class="signup-img" src="img/logo.jpg" alt="mandsaur_pharmacy" height="100px" border="1px"><br>
@@ -54,14 +54,24 @@
                             
                             {{#if adminloginValue}}
                                 <tr>
-                                    <td><input type="number" name="phoneNo" placeholder="Enter Number" {{#if phone}} value={{phone}}{{/if}}><br>
-                                    <span style="color:red" class="pass_class"></span></td>
+                                    <td><input type="number" name="phoneNo" placeholder="Enter Number" {{#if phone}} value={{phone}}{{/if}}><br></td>
                                 </tr>
                                 <tr>
                                     <td>
                                     <label><input type="radio" value="admin" name="type" checked>Admin</label>
                                     <label><input type="radio" value="employee" name="type">Employee</label>
-                                </td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="date" name="dob">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label><input type="radio" value="Male" name="gender" checked>Male</label>
+                                    <label><input type="radio" value="Female" name="gender">Female</label>
+                                    <label><input type="radio" value="Other" name="gender">Other</label>
+                                    </td>
                                 </tr>
                             {{/if}}
                             <tr>

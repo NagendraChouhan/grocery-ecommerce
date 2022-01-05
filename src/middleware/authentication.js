@@ -2,6 +2,7 @@
 const jwt=require("jsonwebtoken");
 const userDetails=require("../models/usermodel.js");
 const adminDetails=require("../models/adminmodel.js");
+const employeDetails=require("../models/employemodel");
 const productDetail=require("../models/productmodel");
 
 
@@ -20,11 +21,16 @@ const authentication=async(req,res,next)=>{
             //console.log("req.userdata"+req.userdata);
             if(req.userdata===null || req.userdata===undefined){
                 //console.log("undefined tokenvarify");
-
                 const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
                 const data = await adminDetails.findOne({_id:tokenvarify._id});
                 req.admindata=data;
-            
+                console.log("admin data="+data);
+            }
+            if(req.admindata===null || req.admindata===undefined){
+                const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
+                const data = await employeDetails.findOne({_id:tokenvarify._id});
+                req.employeData=data;
+                console.log("employe data="+data);
 
             }
             
@@ -45,9 +51,9 @@ const authentication=async(req,res,next)=>{
         });
     }
 }
-const aauthanticaton=async(req,res,next)=>{
+const aauthantication=async(req,res,next)=>{
     try {
-            console.log("call from aauthanticaton try");
+            console.log("call from aauthantication try");
 
             //for find user is login or not use authtoken
             var admintoken =req.cookies.admintoken;
@@ -55,8 +61,9 @@ const aauthanticaton=async(req,res,next)=>{
             // console.log("auth token");
 
             // const admintoken =req.cookies.admintoken;
+            
             const adminVarify=jwt.verify(admintoken,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
-            console.log("admin varify");
+            console.log("admintoken varify");
             const admin = await adminDetails.findOne({_id:adminVarify._id});
             console.log("admin id varify");
             req.admin=admin;
@@ -68,6 +75,38 @@ const aauthanticaton=async(req,res,next)=>{
         var login=true;
         var logout=false;
         if(admintoken!=undefined){
+            login=false;
+            logout=true;
+        }
+        res.render("index",{
+            
+            loginValue:login,
+            logoutValue:logout,
+        });
+    }
+}
+
+const aempauthantication=async(req,res,next)=>{
+    try {
+            console.log("call from empauthantication try");
+
+            //for find employe is login or not use aut
+            var employetoken =req.cookies.employetoken;
+
+            //chech employe is authanticate or not
+            const tokenvarify=jwt.verify(employetoken,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
+            console.log("employetoken varify");
+            const employe = await employeDetails.findOne({_id:tokenvarify._id});
+            console.log("employetoken id varify");
+
+            req.employe=employe;
+            next();
+    } catch (error) {
+        console.log("er from empauthantication="+error);
+        console.log("call from empauthantication");
+        var login=true;
+        var logout=false;
+        if(employetoken!=undefined){
             login=false;
             logout=true;
         }
@@ -93,6 +132,13 @@ function acommanauth(renderto) {
                     const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
                     const data = await adminDetails.findOne({_id:tokenvarify._id});
                     req.admindata=data;
+                }
+                if(req.admindata===null || req.admindata===undefined){
+                    const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
+                    const data = await employeDetails.findOne({_id:tokenvarify._id});
+                    req.employeData=data;
+                    console.log("employe data="+data);
+    
                 }
                 next();
         } 
@@ -151,6 +197,7 @@ function acommanauth(renderto) {
 }
 module.exports= {
     userauthentication:authentication,
-    adminauthanticaton:aauthanticaton,
+    adminauthanticaton:aauthantication,
+    empauthantication:aempauthantication,
     commanauth:acommanauth,
 }

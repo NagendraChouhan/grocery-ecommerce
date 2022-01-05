@@ -4,6 +4,7 @@ const  {adminauthanticaton}=require("../middleware/authentication");
 const userDetails=require("../models/usermodel.js");
 const adminDetails=require("../models/adminmodel.js");
 const productDetail=require("../models/productmodel.js");
+const employeDetails=require("../models/employemodel");
 
 // const {dashboard}=require("../controllers/dashboardController");
 
@@ -17,6 +18,10 @@ var adminlogin=false;
 router.use("/",adminauthanticaton);
 
 router.get("/",(req,res)=>{
+    if(req.admin!=undefined && req.admin!=null){
+        adminlogin=true;
+        login=false;
+    }
     userDetails.find({},function(error,list){
         res.render("dashboard",{
             loginValue:login,
@@ -38,8 +43,17 @@ router.get("/signup",(req,res)=>{
 router.post("/signup",async(req,res)=>{
     try {
         const username=req.body.username;
-        const adminemail=await adminDetails.findOne({email:username});
-        if(adminemail===null){
+        const type=req.body.type;  //type value is admin/employe
+        console.log("type of admin employe="+type);
+        var emailcheck;
+        if(type==="admin"){
+            // if admin type is selected is here
+            emailcheck=await adminDetails.findOne({email:username});
+        }else{
+            // if employe type is selected is here
+            emailcheck=await employeDetails.findOne({email:username});
+        }
+        if(emailcheck===null || emailcheck===undefined){
             // console.log("if email");
             const password=req.body.pass;
             const repassword=req.body.rPass;
@@ -67,7 +81,21 @@ router.post("/signup",async(req,res)=>{
                     });
                 }
                 else if(type==="employee"){
-                    res.status(400).send("employee");
+                    const regEmployeDetails= new employeDetails({
+                        name:name,
+                        email:username,
+                        password:password,
+                        phone:phone,
+                        gender:gender,
+                        dob:dob
+                    })
+                    await regEmployeDetails.generateToten();
+                    await regEmployeDetails.save();
+                    res.status(201).render("signup",{
+                        loginValue:login,
+                        logoutValue:logout,
+                        adminloginValue:adminlogin,
+                    });
                 }
             }
             else{
@@ -84,7 +112,7 @@ router.post("/signup",async(req,res)=>{
             res.status(400).send("emial is exist");
         }
     } catch (error) {
-        console.log("signup err");
+        console.log("signup err=="+error);
         res.status(400).send(error);
     }
 })

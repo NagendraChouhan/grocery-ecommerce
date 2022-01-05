@@ -14,6 +14,8 @@ const sgMail = require('@sendgrid/mail')
 var login=true;
 var logout=false;
 var adminlogin=false;
+var emplogin=false;
+
 
 //home routes
 
@@ -25,9 +27,15 @@ router.get("/",userauthentication,(req,res)=>{
         adminlogin=true;
         login=false;
     }
+    if(req.employeData!=undefined && req.employeData!=null){
+        emplogin=true;
+        login=false;
+    }
     res.render("index",{
         loginValue:login,
         adminloginValue:adminlogin,
+        emploginValue:emplogin,
+
     });
     // console.log("value /"+inout);
 
@@ -35,16 +43,20 @@ router.get("/",userauthentication,(req,res)=>{
 router.get("/contact",commanauth("contact"),(req,res)=>{
     login=true;
     if(req.userdata!=undefined && req.userdata!=null){
-        
         login=false;
     }
     if(req.admindata!=undefined && req.admindata!=null){
         adminlogin=true;
         login=false;
     }
+    if(req.employeData!=undefined && req.employeData!=null){
+        emplogin=true;
+        login=false;
+    }
     res.render("contact",{
         loginValue:login,
         adminloginValue:adminlogin,
+        emploginValue:emplogin,
     });
 })
 router.get("/product",commanauth("product"),(req,res)=>{
@@ -56,10 +68,15 @@ router.get("/product",commanauth("product"),(req,res)=>{
         adminlogin=true;
         login=false;
     }
+    if(req.employeData!=undefined && req.employeData!=null){
+        emplogin=true;
+        login=false;
+    }
     productDetail.find({},function(error,list){
         res.render("product",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             userList:list, 
         });
     })
@@ -74,13 +91,18 @@ router.get("/productdetails",commanauth("productdetails"),(req,res)=>{
         adminlogin=true;
         login=false;
     }
+    if(req.employeData!=undefined && req.employeData!=null){
+        emplogin=true;
+        login=false;
+    }
     const id=req.query.id;
     if(id===undefined || id===null){
         productDetail.find({},function(error,list){
             res.render("product",{
                 loginValue:login,
                 adminloginValue:adminlogin,
-                userList:list, 
+                emploginValue:emplogin,
+                userList:list,
             });
         })
     }
@@ -90,6 +112,7 @@ router.get("/productdetails",commanauth("productdetails"),(req,res)=>{
         res.render("productdetails",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             product:list, 
         });
     })
@@ -103,10 +126,15 @@ router.get("/addtocart",commanauth("addtocart"),(req,res)=>{
         adminlogin=true;
         login=false;
     }
+    if(req.employeData!=undefined && req.employeData!=null){
+        emplogin=true;
+        login=false;
+    }
     productDetail.find({},function(error,list){
         res.render("addtocart",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             productlist:list, 
         });
     })
@@ -134,6 +162,18 @@ router.get("/logout",userauthentication,async(req,res)=>{
             await req.admindata.save();
         }
         
+        if(req.employeData!=undefined){
+            //admin is define in authentication
+            req.employeData.tokens= req.employeData.tokens.filter((currentElement)=>{ 
+                // console.log("filter");
+                //token is define/modify in authentication
+                return currentElement.token !== req.token; 
+            })
+            res.clearCookie("token");
+            res.clearCookie("employetoken");
+            await req.employeData.save();
+        }
+
         res.clearCookie("token");
         // console.log("value logout before"+inout);
         login=true;
@@ -145,6 +185,7 @@ router.get("/logout",userauthentication,async(req,res)=>{
         res.render("login",{
             loginValue:login,        
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
         });
     } catch (error) {
         console.log(error);
@@ -186,6 +227,7 @@ router.post("/forgotPassword",async(req,res)=>{
             res.render("otp",{
                 loginValue:login,
                 adminloginValue:adminlogin,
+                emploginValue:emplogin,
                 username:req.body.email,
                 otpVisible:false,
                 updatePassotp:true,
@@ -198,6 +240,7 @@ router.post("/forgotPassword",async(req,res)=>{
         res.render("otp",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             otperr:error,
             username:req.body.email,
             otpVisible:true,
@@ -215,6 +258,7 @@ router.post("/chechupdatepassotp",async(req,res)=>{
             res.status(201).render("otp",{
                 loginValue:login,
                 adminloginValue:adminlogin,
+                emploginValue:emplogin,
                 email:req.body.email,
                 nameotp:"Email Verification",
                 updatePass:true,
@@ -228,6 +272,7 @@ router.post("/chechupdatepassotp",async(req,res)=>{
         res.render("otp",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             username:req.body.email,
             nameotp:"Email Verification",
             updatePassotp:true,
@@ -250,6 +295,7 @@ router.patch("/updatepassword",async(req,res)=>{
         res.render("login",{
             loginValue:login,        
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
         });
         // if(pass===rpass && pass.lenght<0){
 
@@ -277,6 +323,7 @@ router.patch("/updatepassword",async(req,res)=>{
         res.render("login",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             email:req.body.email,
             nameotp:"Email Verification",
             updatePass:true,
@@ -303,9 +350,14 @@ router.get("/otp",(req,res)=>{
         adminlogin=true;
         login=false;
     }
+    if(req.employeData!=undefined && req.employeData!=null){
+        emplogin=true;
+        login=false;
+    }
     res.render("otp",{
         loginValue:login,
         adminloginValue:adminlogin,
+        emploginValue:emplogin,
         otpVisible:forgotPassword,
         nameotp:nameotpValue,
     });
@@ -358,6 +410,7 @@ router.post("/otp",async(req,res)=>{
                 res.status(201).render("login",{
                     loginValue:login,
                     adminloginValue:adminlogin,
+                    emploginValue:emplogin,
                 });
             }
             else{
@@ -374,6 +427,7 @@ router.post("/otp",async(req,res)=>{
         res.status(201).render("otp",{
             loginValue:login,
             adminloginValue:adminlogin,
+            emploginValue:emplogin,
             otperr:error,
             username:req.body.email,
         });
