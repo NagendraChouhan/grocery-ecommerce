@@ -31,7 +31,7 @@ const port=process.env.PORT || 3000;
 const partialspath=path.join(__dirname,"../views/partials");
 
 app.set('view engine','hbs');
-app.use('/css',express.static(path.join(__dirname,"../public/css")));
+app.use('/css-dist',express.static(path.join(__dirname,"../public/css-dist")));
 app.use('/img',express.static(path.join(__dirname,"../public/img")));
 app.use('/js',express.static(path.join(__dirname,"../public/js")));
 hbs.registerPartials(partialspath);
