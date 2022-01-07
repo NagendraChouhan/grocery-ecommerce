@@ -1,1 +1,1 @@
-#total{border:2px solid #c7c4c4;border-radius:6px;height:fit-content;padding:15px;position:sticky;top:120px;width:40%}
+#total{border:2px solid #c7c4c4;border-radius:6px;height:fit-content;padding:15px;position:sticky;top:120px;width:40%}.cart-box-container{display:grid;flex:1 1 40rem;flex-wrap:wrap;gap:10px}.box{display:flex;gap:10px;justify-content:space-evenly}@media screen and (min-width:500px){.box{display:block}}

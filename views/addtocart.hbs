@@ -47,6 +47,7 @@
                 grandTotal+=totalprice;
                 cartBoxContainer=document.getElementById("cart-box-container");
                 cartBoxContainer.innerHTML+='<div class="box" style="display: flex; justify-content: space-evenly; gap: 10px;" id="cartbox{{id}}"><div><span class="discount">-33%</span><div class="icons"><a href="#" class="fas fa-heart"></a><a href="#" class="fas fa-share"></a><a href="#" class="fas fa-eye"></a></div><img src={{fileID}} alt=""></div><div style="place-self: center;"><h3>{{name}}</h3><div class="price">Rs.{{price}}<span> Rs.{{price}}+20 </span> </div><div class="quantity"><button onclick=quantity("{{id}}","-","{{price}}") class="inc_dec_button">-</button><input  id="no_of_item{{id}}" class="comman" value="'+localstoragevalue+'" size="1px" readonly ><span>kg </span><button onclick=quantity("{{id}}","+","{{price}}") class="inc_dec_button">+</button><br><br></div><button class="removecart" onclick=removecart("{{id}}","{{price}}")>Remove</button></div></div>'
+                
             }
             else{
                 console.log(null);
@@ -60,7 +61,7 @@
             total=document.getElementById("total");
             total.innerHTML='<h1>Go to product</h1>'
         }
-
+        
 
     </script>
     <!-- custom js file link  -->
