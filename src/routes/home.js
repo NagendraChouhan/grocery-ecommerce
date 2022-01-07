@@ -31,12 +31,16 @@ router.get("/",userauthentication,(req,res)=>{
         emplogin=true;
         login=false;
     }
-    res.render("index",{
-        loginValue:login,
-        adminloginValue:adminlogin,
-        emploginValue:emplogin,
-
-    });
+    productDetail.find({},function(error,list){
+        console.log("productList=="+list);
+        res.render("index",{
+            loginValue:login,
+            adminloginValue:adminlogin,
+            emploginValue:emplogin,
+            produvtList:list,             
+        });
+    })
+   
     // console.log("value /"+inout);
 
 })

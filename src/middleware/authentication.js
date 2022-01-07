@@ -44,11 +44,15 @@ const authentication=async(req,res,next)=>{
         
         console.log("err from auth=="+error);
 
-
-        res.render("index",{
-            loginValue:true,
-            logoutValue:false,
-        });
+        productDetail.find({},function( error,list){
+            console.log("productList=="+list);
+            res.render("index",{
+                loginValue:true,
+                logoutValue:false,
+                produvtList:list,             
+            });
+        }).sort({ priority: -1 }).limit(5);
+        
     }
 }
 const aauthantication=async(req,res,next)=>{
@@ -78,11 +82,14 @@ const aauthantication=async(req,res,next)=>{
             login=false;
             logout=true;
         }
-        res.render("index",{
-            
-            loginValue:login,
-            logoutValue:logout,
-        });
+        productDetail.find({},function(error,list){
+            console.log("productList=="+list);
+            res.render("index",{
+                loginValue:login,
+                logoutValue:logout,
+                produvtList:list,             
+            });
+        })
     }
 }
 
@@ -110,11 +117,14 @@ const aempauthantication=async(req,res,next)=>{
             login=false;
             logout=true;
         }
-        res.render("index",{
-            
-            loginValue:login,
-            logoutValue:logout,
-        });
+        productDetail.find({},function(error,list){
+            console.log("productList=="+list);
+            res.render("index",{
+                loginValue:login,
+                logoutValue:logout,
+                produvtList:list,             
+            });
+        })
     }
 }
 
