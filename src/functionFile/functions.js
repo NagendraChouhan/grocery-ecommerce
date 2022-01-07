@@ -3,6 +3,7 @@ const sgMail = require('@sendgrid/mail')
 
 function otpsendfunction(uto,uname,uotp){
     sgMail.setApiKey(process.env.SENDEMAIL_API_KEY);
+    console.log(process.env.SENDEMAIL_API_KEY);
     const msg = {
     to: uto, // EMAIL SEND TO
     from: 'nikku200109@gmail.com', // EMAIL SEND BY
