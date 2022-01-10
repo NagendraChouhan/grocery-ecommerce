@@ -1,11 +1,11 @@
 require('dotenv').config();
 const sgMail = require('@sendgrid/mail')
 
-function otpsendfunction(uname,uotp){
+function otpsendfunction(username,uname,uotp){
     sgMail.setApiKey(process.env.SENDEMAIL_API_KEY);
     console.log(process.env.SENDEMAIL_API_KEY);
     const msg = {
-    to: uto, // EMAIL SEND TO
+    to: username, // EMAIL SEND TO
     from: 'nikku200109@gmail.com', // EMAIL SEND BY
     subject: 'Baren otp',
     text: 'Hello'+uname+' Your otp is-'+uotp,
