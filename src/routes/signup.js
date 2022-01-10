@@ -36,6 +36,7 @@ router.post("/",async(req,res)=>{
         }
         
         console.log("useremail=="+username);
+        username.toLowerCase();
         var userDetailsemail=await userDetails.findOne({email:username});
         if(userDetailsemail!=null){
             throw new Error ("email is already registered");
