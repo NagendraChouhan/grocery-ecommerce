@@ -3,6 +3,7 @@
     text-align: center;
     justify-content: center;
     margin-bottom: 3%;
+    flex-wrap: wrap;
 }
 .phone, .email, .office{
     width: 200px;
@@ -13,3 +14,7 @@
 }
 
 
+.contact-form,.contact-inner-div{
+    border-radius: 0px;
+    border: 10px solid red;
+}

@@ -81,11 +81,14 @@ router.post("/",async(req,res)=>{
                     password:password,
                     otp:otpsend
                 })
-                
+                console.log("user data is ready to save");
                 const register=await regverifyuser.save();
+                console.log("user data is saved");
                 
+                console.log("otp function callinh");
                 otpsendfunction(username,name,otpsend);
-
+                console.log("otp send");
+                
                 res.status(201).render("otp",{
                     loginValue:login,
                     adminloginValue:adminlogin,

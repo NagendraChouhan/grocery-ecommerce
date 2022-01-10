@@ -1,7 +1,6 @@
 require('dotenv').config();
 const sgMail = require('@sendgrid/mail')
 
-
 function otpsendfunction(uname,uotp){
     sgMail.setApiKey(process.env.SENDEMAIL_API_KEY);
     console.log(process.env.SENDEMAIL_API_KEY);
