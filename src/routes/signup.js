@@ -30,7 +30,7 @@ router.get("/",commanauth("signup"),(req,res)=>{
 })
 router.post("/",async(req,res)=>{
     try {
-        const username=req.body.username;
+        let username=req.body.username;
         if(!validator.isEmail(username)){
             throw new Error('Invalid Email');
         }
