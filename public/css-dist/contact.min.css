@@ -1,1 +1,1 @@
-.contact-inner-div{display:flex;justify-content:center;margin-bottom:3%;text-align:center;flex-wrap: wrap;}.email,.office,.phone{border:2px solid gray;height:200px;margin:1%;padding:2%;width:200px}.contact-form > *,.inputBox> *{border-radius: 0px;border: 10px solid red;}
+.contact-inner-div{display:flex;flex-wrap:wrap;justify-content:center;margin-bottom:3%;text-align:center}.email,.office,.phone{border:2px solid gray;height:200px;margin:1%;padding:2%;width:200px}.contact-form,.contact-inner-div{border:10px solid red;border-radius:0}

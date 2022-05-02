@@ -41,7 +41,7 @@
             document.getElementById('AddressTable').scrollIntoView();
             
             var aformid=document.getElementById("formid");
-            aformid.setAttribute("action","/pay");
+            aformid.setAttribute("action","/address?id="+id+"&amount="+{{payment}});
             document.getElementById("addsubbtn").innerHTML="Pay";
 
             var country=document.getElementsByName("country")[0];
@@ -70,6 +70,9 @@
             colony.value=colonyId.innerHTML;
             landmark.value=landmarkId.innerHTML;
             pinCode.value=pinCodeId.innerHTML;
+            //var url = new URLSearchParams(window.location.search);
+            //var mainurl = url +'?'+id
+            //window.open(mainurl,'_self')
 
         }
     </script>

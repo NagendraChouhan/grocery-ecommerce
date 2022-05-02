@@ -46,7 +46,8 @@
     </footer>
     <!-- custom js file link  -->
     <script>
-        var url = "https://reqbin.com/echo/patch/json";
+        var url = "/chechupdatepassotp";
+        console.log("url=="+url);
         console.log("inside script of ajax");
         var xhr = new XMLHttpRequest();
         xhr.open("PATCH", url);
@@ -59,16 +60,6 @@
             console.log(xhr.status);
             console.log(xhr.responseText);
         }};
-
-        var data = `{
-        "Id": 12345,
-        "Customer": "John Smith",
-        "Quantity": 1,
-        "Price": 10.00
-        }`;
-
-        xhr.send(data);
-
         
         $(document).ready(function(){
             console.log("inside ajax");
@@ -82,9 +73,17 @@
                     method: 'patch',
                     data: formdata,
                     success: function (result, status, xhr){
+                        console.log("xhr=="+xhr);
+                        console.log("status=="+status);
+                        console.log("res="+xhr.responseXML);
                         console.log('successful.....');
+
+                        window.location.href="/";
                     },
                     error: function(xhr, status, error){
+                        console.log("xhr=="+xhr);
+                        console.log("status=="+status);
+                        console.log("rep="+xhr.responseXML);
                         console.log('error from updatepasswordform==='+error);
                     }
                 })

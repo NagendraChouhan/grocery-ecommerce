@@ -40,8 +40,7 @@ const userschema= new mongoose.Schema({
             type:String,
             require:true
         }
-    }
-    ]
+    }]
 })
 
 userschema.methods.generateToten= async function(){

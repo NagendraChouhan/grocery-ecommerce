@@ -9,18 +9,12 @@ const productDetail=require("../models/productmodel");
 const authentication=async(req,res,next)=>{
     try {
         const token =req.cookies.token;
-        // console.log("auth token");
-        // console.log(token);
         
-        //     console.log("user varify1");
             const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
             const data = await userDetails.findOne({_id:tokenvarify._id});
-            // console.log("tokenvarify="+tokenvarify._id);
-            // console.log("defined tokenvarify");
+            
             req.userdata=data;
-            //console.log("req.userdata"+req.userdata);
             if(req.userdata===null || req.userdata===undefined){
-                //console.log("undefined tokenvarify");
                 const tokenvarify=jwt.verify(token,"jwtformyvegitablewebsitewhichisusedforverifyingauthuserofmywebsite");
                 const data = await adminDetails.findOne({_id:tokenvarify._id});
                 req.admindata=data;

@@ -78,12 +78,12 @@ router.post("/",async(req,res)=>{
                         adminlogin=true;
                         const token= await employeemail.generateToten();
                         res.cookie("token",token,{
-                            expires:new Date(Date.now()+600000),
+                            expires:new Date(Date.now()+6000000000),
                             httpOnly:true,
                             // secure:true
                         });
                         res.cookie("employetoken",token,{
-                            expires:new Date(Date.now()+600000),
+                            expires:new Date(Date.now()+6000000000),
                             httpOnly:true,
                             // secure:true
                         });

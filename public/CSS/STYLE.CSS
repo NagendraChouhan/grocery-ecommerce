@@ -2,7 +2,9 @@
   --green:#27ae60;
   --black:#2c2c54;
 }
-
+body{
+  overflow: auto;
+}
 *{
   font-family: 'Nunito', sans-serif;
   margin:0; padding:0;
@@ -421,7 +423,7 @@ section{
 }
 
 .deal{
-  background:url(../images/deal-bg.jpg) no-repeat;
+  background:url(../img/deal-bg.jpg) no-repeat;
   background-position: center;
   background-size: cover;
   padding-top: 7rem;
@@ -503,7 +505,7 @@ section{
 }
 
 .newsletter{
-  background:url(../images/newsletter-bg.jpg) no-repeat;
+  background:url(../img/newsletter-bg.jpg) no-repeat;
   background-size: cover;
   background-position: center;
   text-align: center;

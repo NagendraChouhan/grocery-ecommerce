@@ -4,6 +4,8 @@ const  {commanauth}=require("../middleware/authentication");
 const productDetail=require("../models/productmodel.js");
 const userDetails=require("../models/usermodel.js");
 
+const jwt = require("jsonwebtoken");
+
 
 var login=true;
 var logout=false;
@@ -14,6 +16,7 @@ var adminlogin=false;
 router.get("/",commanauth("login"),async(req,res)=>{
     login=true;
     var user;
+    console.log("req.query.amountgets======"+req.query.amount)
     if(req.userdata!=undefined && req.userdata!=null){
         login=false;
         user=req.userdata;
@@ -29,11 +32,13 @@ router.get("/",commanauth("login"),async(req,res)=>{
         adminloginValue:adminlogin,
         data:user,
         address:user.address,
+        payment:req.query.amount
     });    
 })
 router.post("/",async(req,res)=>{
     try{
         console.log("address");
+        console.log("req.query.amount======"+req.query.amount)
         const id=req.query.id;
         const country=req.body.country;
         const state=req.body.state;
@@ -64,15 +69,20 @@ router.post("/",async(req,res)=>{
             }
             );
             
+            const token = req.cookies.token; 
+            const tokenvarify=jwt.verify(token,process.env.JWT_TOKEN);
+            const detail = await userDetails.findOne({_id:tokenvarify._id});    
         // const register=await result.save();
-
         productDetail.find({},function(error,list){
             res.render("pay",{
                 loginValue:login,
                 logoutValue:logout,
                 adminloginValue:adminlogin,
                 productlist:list,
-                alert:true
+                alert:true,
+                payment:req.query.amount,
+                name:detail.name,
+                key:process.env.PUBLISHABLE_KEY
 
             });
         })
