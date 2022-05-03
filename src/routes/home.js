@@ -478,24 +478,27 @@ router.post("/pay", async (req, res) => {
 
   console.log("id=" + detail);
 });
-router.post("/payment",(req,res)=>{
+router.post("/payment", (req, res) => {
+  console.log("api/payment/verify===========");
+  let body =
+    req.body.response.razorpay_order_id +
+    "|" +
+    req.body.response.razorpay_payment_id;
 
-  console.log("api/payment/verify===========")
-  let body=req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
- 
-   var crypto = require("crypto");
-   var expectedSignature = crypto.createHmac('sha256', '<YOUR_API_SECRET>')
-                                   .update(body.toString())
-                                   .digest('hex');
-                                   console.log("sig received " ,req.body.response.razorpay_signature);
-                                   console.log("sig generated " ,expectedSignature);
-   var response = {"signatureIsValid":"false"}
-   console.log("response===="+response)
+  var crypto = require("crypto");
+  var expectedSignature = crypto
+    .createHmac("sha256", "<YOUR_API_SECRET>")
+    .update(body.toString())
+    .digest("hex");
+  console.log("sig received ", req.body.response.razorpay_signature);
+  console.log("sig generated ", expectedSignature);
+  var response = { signatureIsValid: "false" };
+  console.log("response====" + response);
 
-   if(expectedSignature === req.body.response.razorpay_signature)
-    response={"signatureIsValid":"true"}
-    console.log("response===="+response)
-       res.send(response);
-   });
- 
+  if (expectedSignature === req.body.response.razorpay_signature)
+    response = { signatureIsValid: "true" };
+  console.log("response====" + response);
+  res.send(response);
+});
+
 module.exports = router;

@@ -8,7 +8,6 @@ const firebase=require("./firebase/firebasesdk");
 const cookieParser =require("cookie-parser");
 const { async } = require("@firebase/util");
 const { errorMonitor } = require("stream");
-const Paytm = require('paytmchecksum');
 
 //importing routes code start here
 

@@ -9,14 +9,22 @@
     <!-- header section ends -->
 
     <!-- home section starts  -->
-    <h1>
-        payment=={{payment}}
-        name=={{name}}
-        key=={{key}}
-
-    </h1>
-    <h3>Welcome to Payment Gateway</h3>
-    <button id="rzp-button1">Pay</button>
+    <section>
+        
+        <div style="display: grid;
+    margin: 10%;
+    font-size: 25px;
+    text-align: center;">
+            <h3 style="margin-bottom: 50px;
+    color: darkblue;">Welcome to Payment Gateway</h3>
+            <h2 style="    font-size: 26px;
+    margin-bottom: 18px;
+}">{{name}}</h2>
+            <button style="padding: 12px;
+    border-radius: 4px;
+    background-color: #20e454; front-size:20px; margin-top:10px"id="rzp-button1">Pay</button>
+        </div>
+    </section>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <form action="pay" method="POST">
         
@@ -46,7 +54,7 @@
                 "key": "rzp_test_yuwPvfDSdNXbXV", // Enter the Key ID generated from the Dashboard
                 "amount": parseFloat({{payment}}), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 "currency": "INR",
-                "name": "Acme Corp",
+                "name": '{{name}}',
                 "description": "Test Transaction",
                 "image": "https://example.com/your_logo",
                 "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
@@ -59,6 +67,9 @@
                     data: {
                         amount:{{payment}}
                     },
+                    for(let i=0;i<localStorage['product'];i++){
+
+                    }
                     success: function (result, status, xhr){
                         console.log("xhr=="+xhr);
                         console.log("status=="+status);

@@ -83,7 +83,6 @@ router.post("/",async(req,res)=>{
                 alert:true,
                 payment:parseFloat(req.query.amount),
                 name:detail.name,
-                key:process.env.PUBLISHABLE_KEY
 
             });
         })

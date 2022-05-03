@@ -156,7 +156,7 @@ function removecart(id,price){
 
     // window.location.reload();
 }
-
+var itemvalue=0;
 function aad_to_cart(id){
     const no_of_itemid=document.getElementById('no_of_item'+id);
     const cartbtnid=document.getElementById('cart'+id);
@@ -164,6 +164,8 @@ function aad_to_cart(id){
     var value=parseInt(no_of_itemid.value);
     console.log(value);
     window.localStorage.setItem(id,value);
+    window.localStorage.setItem(`product${itemvalue}`,id);
+    itemvalue++;
     console.log(cartbtnid);
     cartbtnid.innerHTML="Go to Cart";
     cartbtnid.setAttribute("onclick","location.href='/addtocart'");

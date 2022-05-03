@@ -7,6 +7,10 @@ const orderschema = new mongoose.Schema({
       require: true,
     },
   ],
+  userid:{
+    type:String,
+    require:true
+  },
   price: {
     type: Number,
     require: true,
