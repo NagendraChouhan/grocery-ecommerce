@@ -83,7 +83,7 @@ const aauthantication=async(req,res,next)=>{
                 logoutValue:logout,
                 produvtList:list,             
             });
-        })
+        }).sort({ priority: -1 }).limit(5);
     }
 }
 
@@ -118,7 +118,7 @@ const aempauthantication=async(req,res,next)=>{
                 logoutValue:logout,
                 produvtList:list,             
             });
-        })
+        }).sort({ priority: -1 }).limit(5);
     }
 }
 

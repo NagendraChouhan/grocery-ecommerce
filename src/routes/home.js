@@ -52,7 +52,7 @@ router.get("/", userauthentication, (req, res) => {
       emploginValue: emplogin,
       produvtList: list,
     });
-  });
+  }).sort({ priority: -1 }).limit(5);
 
   // console.log("value /"+inout);
 });

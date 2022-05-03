@@ -4,7 +4,9 @@ const  {commanauth}=require("../middleware/authentication");
 const userDetails=require("../models/usermodel.js");
 const adminDetails=require("../models/adminmodel.js");
 const employeDetails=require("../models/employemodel");
+const productDetail = require("../models/productmodel.js");
 const bcryptjs=require("bcryptjs");
+
 
 
 var login=true;
@@ -22,9 +24,13 @@ router.get("/",commanauth("login"),(req,res)=>{
         adminlogin=true;
         login=false;
     }
-    res.render("index",{
-        loginValue:login,
-    });
+    productDetail.find({}, function (error, list) {
+        console.log("productList==" + list);
+        res.render("index", {
+          loginValue: login,
+          produvtList: list,
+        });
+      }).sort({ priority: -1 }).limit(5);
 })
 router.post("/",async(req,res)=>{
     try {
@@ -174,9 +180,13 @@ router.post("/",async(req,res)=>{
                 // secure:true
                 
                 });
-                res.status(201).render("index",{
-                    loginValue:login,
-                });
+                productDetail.find({}, function (error, list) {
+                    console.log("productList==" + list);
+                    res.render("index", {
+                      loginValue: login,
+                      produvtList: list,
+                    });
+                  }).sort({ priority: -1 }).limit(5);
             }
             else{
                 console.log("err user pass");

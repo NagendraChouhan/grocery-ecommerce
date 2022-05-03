@@ -24,11 +24,11 @@
                         <tr>
                             <form  autocomplete="on" action="/dashboard/addproduct" name="persanalform" method="post" style="overflow:auto ;">
                                     <td class="sn"></td>
-                                    <td><input type="text" name="id" readonly value={{id}}></td>
-                                    <td><input type="text" name="name" readonly value="{{name}}"></td>
-                                    <td><input type="number" name="price" readonly value={{price}}></td>
-                                    <td><input type="text" name="image" readonly value={{fileID}}></td>
-                                    <td><textarea name="decription" readonly cols="10" rows="1">{{decription}}</textarea><br></td>
+                                    <td><input style="width:120px;" type="text" name="id" readonly value={{id}}></td>
+                                    <td><input style="width:120px;" type="text" name="name" readonly value="{{name}}"></td>
+                                    <td><input style="width:120px;" type="number" name="price" readonly value={{price}}></td>
+                                    <td><input style="width:120px;" type="text" name="image" readonly value={{fileID}}></td>
+                                    <td><textarea style="width:120px;" name="decription" readonly cols="10" rows="1">{{decription}}</textarea><br></td>
                                     {{!-- <td><input type="text" name="date" readonly value={{date}}></td> --}}
                                     <td><label><input type="checkbox" name="deletecheckbox" class="checkboxoption">Delete</label></td>
                                     <td><button type="submit" class="checkboxButton" disabled>Delete</td>

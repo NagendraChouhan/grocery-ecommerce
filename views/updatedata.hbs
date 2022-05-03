@@ -27,11 +27,11 @@
                                 <fieldset id="f1">
                                     <div>
                                         <td class="sn"></td>
-                                        <td id="name"><input type="text" name="id" readonly value={{id}}></td>
-                                        <td><input type="text" name="name" placeholder="Enter Name" pattern="^[a-z A-Z]+$" title="Only use ALPHABETS" autofocus required value="{{name}}"></td>
-                                        <td><input type="number" name="price" min="1" placeholder="Enter price" required value={{price}}></td>
-                                        <td><input type="text" name="image" placeholder="Enter Image Link"  multiple required value={{fileID}}></td>
-                                        <td><textarea name="decription" placeholder="Enter Decription" required cols="10" rows="1">{{decription}}</textarea><br></td>
+                                        <td id="name"><input style="width:120px;" type="text" name="id" readonly value={{id}}></td>
+                                        <td><input style="width:120px;" type="text" name="name" placeholder="Enter Name" pattern="^[a-z A-Z]+$" title="Only use ALPHABETS" autofocus required value="{{name}}"></td>
+                                        <td><input style="width:120px;" type="number" name="price" min="1" placeholder="Enter price" required value={{price}}></td>
+                                        <td><input style="width:120px;" type="text" name="image" placeholder="Enter Image Link"  multiple required value={{fileID}}></td>
+                                        <td><textarea style="width:120px;" name="decription" placeholder="Enter Decription" required cols="10" rows="1">{{decription}}</textarea><br></td>
                                         <td><label><input type="checkbox" {{#if available}}checked{{/if}} name="available">Available</label></td>
                                         <td><label><input type="checkbox" name="updatecheckbox" class="checkboxoption">Update</label></td>
                                         <td><button type="submit" class="checkboxButton" disabled>Update</td>

@@ -41,7 +41,6 @@ router.get("/",userauthentication,async(req,res)=>{
     const token = req.cookies.token;
     const tokenvarify = jwt.verify(token, process.env.JWT_TOKEN);
     const detail = await userDetails.findOne({ _id: tokenvarify._id });
-    const productdetail = await orderDetail.findOne({ userid: detail.id });
 
     console.log("admin varify");
     res.render("profile",{
@@ -49,7 +48,6 @@ router.get("/",userauthentication,async(req,res)=>{
         adminloginValue:adminlogin,
         emploginValue:emplogin,
         data:user,
-        productdetail:productdetail.price
     });    
 })
 router.post("/",userauthentication,async(req,res)=>{
