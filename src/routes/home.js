@@ -20,7 +20,6 @@ const jwt = require("jsonwebtoken");
 // const stripe = require("stripe")(process.env.SECRET_KEY);
 
 const Razorpay = require("razorpay");
-const authentication = require("../middleware/authentication");
 var instance = new Razorpay({
   key_id: process.env.KEY_ID,
   key_secret: process.env.SECRET_KEY,
@@ -501,26 +500,5 @@ router.post("/payment", (req, res) => {
   console.log("response====" + response);
   res.send(response);
 });
-
-router.get("/successful", userauthentication("login"),(req, res) => {
-  
-
-  if (req.userdata != undefined && req.userdata != null) {
-    login = false;
-  }
-  if (req.admindata != undefined && req.admindata != null) {
-    adminlogin = true;
-    login = false;
-  }
-  if (req.employeData != undefined && req.employeData != null) {
-    emplogin = true;
-    login = false;
-  }
-  res.render("successful", {
-    loginValue: login,
-    adminloginValue: adminlogin,
-  });
-});
-
 
 module.exports = router;
