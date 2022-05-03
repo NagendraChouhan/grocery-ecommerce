@@ -107,7 +107,7 @@ router.post("/",async(req,res)=>{
             }
         }
         else{
-            console.log("email else");
+            console.log("email else ");
             throw new Error('Emial is Exist');
         }
     } catch (error) {
