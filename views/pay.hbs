@@ -17,12 +17,9 @@
     text-align: center;">
             <h3 style="margin-bottom: 50px;
     color: darkblue;">Welcome to Payment Gateway</h3>
-            <h2 style="    font-size: 26px;
-    margin-bottom: 18px;
-}">{{name}}</h2>
-            <button style="padding: 12px;
-    border-radius: 4px;
-    background-color: #20e454; front-size:20px; margin-top:10px"id="rzp-button1">Pay</button>
+            <h2 style="font-size: 26px;
+    margin-bottom: 18px;">{{name}}</h2>
+            <button id="rzp-button1"style="padding: 12px;border-radius: 4px;background-color: #20e454; front-size:20px; margin-top:10px;">Pay</button>
         </div>
     </section>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -67,9 +64,7 @@
                     data: {
                         amount:{{payment}}
                     },
-                    for(let i=0;i<localStorage['product'];i++){
-
-                    }
+                    
                     success: function (result, status, xhr){
                         console.log("xhr=="+xhr);
                         console.log("status=="+status);
