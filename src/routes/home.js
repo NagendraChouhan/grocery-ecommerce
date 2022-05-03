@@ -15,9 +15,15 @@ const verifyuser = require("../models/verifyuser.js");
 var validator = require("validator");
 const sgMail = require("@sendgrid/mail");
 const jwt = require("jsonwebtoken");
-var PaytmChecksum = require("../Paytm_Node_Checksum-master/PaytmChecksum");
+// var PaytmChecksum = require("../Paytm_Node_Checksum-master/PaytmChecksum");
 
-const stripe = require("stripe")(process.env.SECRET_KEY);
+// const stripe = require("stripe")(process.env.SECRET_KEY);
+
+const Razorpay = require("razorpay");
+var instance = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.SECRET_KEY,
+});
 
 var login = true;
 var logout = false;
@@ -442,96 +448,54 @@ router.post("/otp", async (req, res) => {
     });
   }
 });
-router.get("/payment",async(req,res)=>{
-  if (req.userdata != undefined && req.userdata != null) {
-    login = false;
-  }
-  if (req.admindata != undefined && req.admindata != null) {
-    adminlogin = true;
-    login = false;
-  }
-  if (req.employeData != undefined && req.employeData != null) {
-    emplogin = true;
-    login = false;
-  }
-  const token = req.cookies.token;      
-  const tokenvarify=jwt.verify(token,process.env.JWT_TOKEN);
-  const detail = await userDetails.findOne({_id:tokenvarify._id});
-  console.log("name==="+detail)
 
-  res.render("pay",{
-    name:detail.name,
-    key:process.env.PUBLISHABLE_KEY
-  });
-})
-router.post("/payment", async (req, res) => {
+router.post("/pay", async (req, res) => {
   /* import checksum generation utility */
 
   /* initialize JSON String */
   body = "{/*YOUR_COMPLETE_REQUEST_BODY_HERE*/}";
   const _id = req.params.id;
-  const token = req.cookies.token;      
-  const tokenvarify=jwt.verify(token,process.env.JWT_TOKEN);
-  const detail = await userDetails.findOne({_id:tokenvarify._id});
-  
-  console.log("name==="+detail)
+  const token = req.cookies.token;
+  const tokenvarify = jwt.verify(token, process.env.JWT_TOKEN);
+  const detail = await userDetails.findOne({ _id: tokenvarify._id });
+
+  console.log("name===" + detail);
   var paymentDetails = {
     name: detail.name,
     id: detail._id,
     email: detail.email,
   };
 
-  try {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'T-shirt',
-            },
-            unit_amount: 2000,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: 'http://localhost:4242/success.html',
-      cancel_url: 'http://localhost:4242/cancel.html',
-    });
-  
-    res.redirect(303, session.url);
-  } catch (e) {
-    res.status(500).json({ error: e.message })
-  }
-  // stripe.customers
-  //   .create({
-  //     email: req.body.stripeEmail,
-  //     source: req.body.stripeToken,
-  //     name: detail.name,
-  //     address: {
-  //       line1: 'TC 9/4 Old MES colony',
-  //       postal_code: '110092',
-  //       city: 'New Delhi',
-  //       state: 'Delhi',
-  //       country: 'India',
-  //     }
-  //   })
-  //   .then((customer) => {
-  //     return stripe.charges.create({
-  //       amount: 7000, // Charing Rs 25
-  //       description: "Web Development Product",
-  //       currency: "usd",
-  //       customer: customer.id,
-  //     });
-  //   })
-  //   .then((charge) => {
-  //     res.send("Success"); // If no error occurs
-  //   })
-  //   .catch((err) => {
-  //     res.send(err); // If some error occurs
-  //   });
+  var options = {
+    amount: parseFloat(req.query.payment), // amount in the smallest currency unit
+    currency: "INR",
+    receipt: "order_rcptid_11",
+  };
+  instance.orders.create(options, function (err, order) {
+    console.log(order);
+    res.send({ order: order.id });
+  });
 
   console.log("id=" + detail);
 });
+router.post("/payment",(req,res)=>{
+
+  console.log("api/payment/verify===========")
+  let body=req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
+ 
+   var crypto = require("crypto");
+   var expectedSignature = crypto.createHmac('sha256', '<YOUR_API_SECRET>')
+                                   .update(body.toString())
+                                   .digest('hex');
+                                   console.log("sig received " ,req.body.response.razorpay_signature);
+                                   console.log("sig generated " ,expectedSignature);
+   var response = {"signatureIsValid":"false"}
+   console.log("response===="+response)
+
+   if(expectedSignature === req.body.response.razorpay_signature)
+    response={"signatureIsValid":"true"}
+    console.log("response===="+response)
+       res.send(response);
+   });
+ 
 module.exports = router;

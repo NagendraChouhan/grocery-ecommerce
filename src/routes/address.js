@@ -73,6 +73,7 @@ router.post("/",async(req,res)=>{
             const tokenvarify=jwt.verify(token,process.env.JWT_TOKEN);
             const detail = await userDetails.findOne({_id:tokenvarify._id});    
         // const register=await result.save();
+        console.log("typeof(req.query.amount)"+typeof(req.query.amount))
         productDetail.find({},function(error,list){
             res.render("pay",{
                 loginValue:login,
@@ -80,7 +81,7 @@ router.post("/",async(req,res)=>{
                 adminloginValue:adminlogin,
                 productlist:list,
                 alert:true,
-                payment:req.query.amount,
+                payment:parseFloat(req.query.amount),
                 name:detail.name,
                 key:process.env.PUBLISHABLE_KEY
 

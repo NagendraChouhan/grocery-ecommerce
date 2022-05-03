@@ -2,6 +2,8 @@
 const express=require("express");
 const router=express.Router();
 const  {userauthentication}=require("../middleware/authentication");
+const orderDetail=require("../models/ordermodel");
+
 
 
 var login=true;
@@ -36,6 +38,22 @@ router.get("/",userauthentication,async(req,res)=>{
         adminloginValue:adminlogin,
         emploginValue:emplogin,
         data:user,
+    });    
+})
+router.post("/",userauthentication,async(req,res)=>{
+    const amount=req.body.amount;
+
+    const regorderDetail=new orderDetail({
+        productid:"",
+        price:amount,
+    })
+    
+    const register=await regorderDetail.save();
+
+    res.render("profile",{
+        loginValue:false,
+        adminloginValue:adminlogin,
+        emploginValue:emplogin,
     });    
 })
 
