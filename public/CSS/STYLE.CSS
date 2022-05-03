@@ -649,6 +649,7 @@ section{
     background:var(--black);
     padding:1rem 2rem;
     display: none;
+    z-index: 9;
   }
 
   .header-2 .navbar.active{
