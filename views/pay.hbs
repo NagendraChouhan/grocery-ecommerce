@@ -56,7 +56,8 @@
                 "image": "https://example.com/your_logo",
                 "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 "handler": function (response){
-                    alert(JSON.stringify(response))
+                    alert("Payment Successful")
+                    localStorage.clear()
                     if(response!==undefined){
                         $.ajax({
                     url: '/profile',
@@ -71,7 +72,7 @@
                         console.log("res="+xhr.responseXML);
                         console.log('successful.....');
 
-                        window.location.href="/";
+                        window.location.href="/successful";
                     },
                     error: function(xhr, status, error){
                         console.log("xhr=="+xhr);
@@ -80,10 +81,7 @@
                         console.log('error from updatepasswordform==='+error);
                     }
                     })
-
-                        window.location.href='/'
                     }
-                    alert(JSON.stringify("response"))
                 }
                 {{!-- "theme": {
                     "color": "#3399cc"
@@ -91,13 +89,7 @@
             };
             var rzp1 = new Razorpay(options);
             rzp1.on('payment.failed', function (response){
-                    alert(response.error.code);
-                    alert(response.error.description);
-                    alert(response.error.source);
-                    alert(response.error.step);
-                    alert(response.error.reason);
-                    alert(response.error.metadata.order_id);
-                    alert(response.error.metadata.payment_id);
+                    
             });
             rzp1.open();
             e.preventDefault();

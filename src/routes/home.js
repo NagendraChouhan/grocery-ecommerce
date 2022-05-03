@@ -501,4 +501,25 @@ router.post("/payment", (req, res) => {
   res.send(response);
 });
 
+router.get("/successful", (req, res) => {
+  login = true;  
+
+  if (req.userdata != undefined && req.userdata != null) {
+    login = false;
+  }
+  if (req.admindata != undefined && req.admindata != null) {
+    adminlogin = true;
+    login = false;
+  }
+  if (req.employeData != undefined && req.employeData != null) {
+    emplogin = true;
+    login = false;
+  }
+  res.render("successful", {
+    loginValue: login,
+    adminloginValue: adminlogin,
+  });
+});
+
+
 module.exports = router;

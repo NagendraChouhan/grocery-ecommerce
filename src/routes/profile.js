@@ -66,7 +66,7 @@ router.post("/",userauthentication,async(req,res)=>{
     
     const register=await regorderDetail.save();
 
-    res.render("profile",{
+    res.render("successful",{
         loginValue:false,
         adminloginValue:adminlogin,
         emploginValue:emplogin,
