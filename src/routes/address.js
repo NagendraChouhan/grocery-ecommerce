@@ -81,7 +81,7 @@ router.post("/",async(req,res)=>{
                 adminloginValue:adminlogin,
                 productlist:list,
                 alert:true,
-                payment:parseFloat(req.query.amount),
+                payment:parseFloat(req.query.amount)|| 60000,
                 name:detail.name,
 
             });
