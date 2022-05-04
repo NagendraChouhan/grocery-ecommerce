@@ -135,10 +135,10 @@ router.post("/addproduct",async(req,res)=>{
         const file=req.body.image;
         const decription=req.body.decription;
         const deletecheckbox=req.body.deletecheckbox;
-        const updatecheckboxproduct=req.body.updatecheckboxproduct;
+        const updatecheckboxproduct=req.body.updatecheckbox;
         var available=req.body.available;
         var blockcheckboxuser=req.body.blockcheckbox;
-
+        console.log("updatecheckboxproduct==="+updatecheckboxproduct)
         if(available==="on"){
             available=true;
         }
