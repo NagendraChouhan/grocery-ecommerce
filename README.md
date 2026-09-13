@@ -1,4 +1,4 @@
-# groceryProject
+# grocery-ecommerce
 
 An online grocery / vegetable store built as a server-rendered Node.js application. Customers can browse products, add them to a cart, save a delivery address and pay online through Razorpay. Admins manage the catalogue and users from a dashboard, and there is a separate employee login.
 
